@@ -7,7 +7,10 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy app code
+# Copy app code
 COPY app.py .
+COPY ai_provider.py .
+COPY pdf_service.py .
 
 EXPOSE 5000
 

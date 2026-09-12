@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#0b0f19">
-
+    <meta name="description" content="Nexora AI — intelligent AI assistant powered by Gemini and Groq">
     <title>Nexora AI</title>
 
     <!-- Markdown -->
@@ -14,15 +14,21 @@
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script>
 
     <!-- Syntax highlighting -->
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/github-dark.min.css">
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/github-dark.min.css"
+    >
     <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/lib/highlight.min.js"></script>
 
     <!-- KaTeX -->
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
-    <script defer
-            src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css"
+    >
+    <script
+        defer
+        src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"
+    ></script>
 
     <style>
         * {
@@ -42,6 +48,7 @@
             --user: #1b2435;
             --danger: #ff5d73;
             --success: #48d597;
+            --warning: #f5b84b;
             --shadow: 0 20px 60px rgba(0,0,0,.35);
         }
 
@@ -57,7 +64,8 @@
             --shadow: 0 20px 60px rgba(30,40,70,.12);
         }
 
-        html, body {
+        html,
+        body {
             width: 100%;
             height: 100%;
             margin: 0;
@@ -89,11 +97,17 @@
             height: 100%;
             display: flex;
             background:
-                radial-gradient(circle at 75% 15%, rgba(124,92,255,.10), transparent 28%),
+                radial-gradient(
+                    circle at 75% 15%,
+                    rgba(124,92,255,.10),
+                    transparent 28%
+                ),
                 var(--bg);
         }
 
-        /* SIDEBAR */
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
 
         .sidebar {
             width: 280px;
@@ -121,9 +135,11 @@
             display: grid;
             place-items: center;
             font-weight: 900;
+            font-size: 15px;
             color: white;
             background: linear-gradient(135deg, #7c5cff, #4f8cff);
             box-shadow: 0 10px 30px rgba(124,92,255,.3);
+            letter-spacing: -.04em;
         }
 
         .brand-title {
@@ -139,7 +155,12 @@
 
         .new-chat {
             border: 1px solid var(--border);
-            background: linear-gradient(135deg, rgba(124,92,255,.18), rgba(79,140,255,.08));
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(124,92,255,.18),
+                    rgba(79,140,255,.08)
+                );
             color: var(--text);
             padding: 12px 14px;
             border-radius: 13px;
@@ -258,7 +279,9 @@
             color: var(--text);
         }
 
-        /* MAIN */
+        /* =====================================================
+           MAIN
+        ===================================================== */
 
         .main {
             flex: 1;
@@ -333,7 +356,9 @@
             border-color: rgba(124,92,255,.45);
         }
 
-        /* CHAT */
+        /* =====================================================
+           CHAT
+        ===================================================== */
 
         .chat-scroll {
             flex: 1;
@@ -366,6 +391,7 @@
             color: white;
             font-size: 28px;
             font-weight: 900;
+            letter-spacing: -.05em;
             background: linear-gradient(135deg,#7c5cff,#4f8cff);
             box-shadow: 0 20px 55px rgba(124,92,255,.3);
             margin-bottom: 22px;
@@ -419,6 +445,7 @@
                 opacity: 0;
                 transform: translateY(5px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -432,7 +459,7 @@
             border-radius: 11px;
             display: grid;
             place-items: center;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 900;
             background: var(--panel2);
             border: 1px solid var(--border);
@@ -442,6 +469,7 @@
             color: white;
             background: linear-gradient(135deg,#7c5cff,#4f8cff);
             border: 0;
+            letter-spacing: -.04em;
         }
 
         .message-content {
@@ -501,10 +529,14 @@
         }
 
         @keyframes blink {
-            50% { opacity: .15; }
+            50% {
+                opacity: .15;
+            }
         }
 
-        /* MARKDOWN */
+        /* =====================================================
+           MARKDOWN
+        ===================================================== */
 
         .message-content h1,
         .message-content h2,
@@ -616,19 +648,55 @@
             background: var(--panel2);
         }
 
-        .attachment-chip {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            padding: 7px 10px;
-            border-radius: 9px;
-            background: var(--panel2);
-            border: 1px solid var(--border);
-            margin: 4px 5px 4px 0;
-            font-size: 12px;
+        /* =====================================================
+           MESSAGE ATTACHMENTS
+        ===================================================== */
+
+        .message-attachments {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
         }
 
-        /* COMPOSER */
+        .message-image-card {
+            width: min(360px, 100%);
+            overflow: hidden;
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            background: var(--panel2);
+        }
+
+        .message-image-card img {
+            display: block;
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            background: #090d15;
+        }
+
+        .message-file-card {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 11px;
+            border-radius: 10px;
+            background: var(--panel2);
+            border: 1px solid var(--border);
+            font-size: 12px;
+            max-width: 100%;
+        }
+
+        .message-file-name {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 260px;
+        }
+
+        /* =====================================================
+           COMPOSER
+        ===================================================== */
 
         .composer-area {
             position: absolute;
@@ -636,11 +704,12 @@
             right: 0;
             bottom: 0;
             padding: 15px 18px 20px;
-            background: linear-gradient(
-                to top,
-                var(--bg) 68%,
-                transparent
-            );
+            background:
+                linear-gradient(
+                    to top,
+                    var(--bg) 68%,
+                    transparent
+                );
             pointer-events: none;
         }
 
@@ -657,33 +726,95 @@
 
         .attachments {
             display: none;
-            padding: 9px 12px 0;
+            padding: 10px 12px 2px;
+            gap: 8px;
+            flex-wrap: wrap;
         }
 
         .attachments.show {
             display: flex;
-            flex-wrap: wrap;
+        }
+
+        .attachment-count {
+            width: 100%;
+            color: var(--muted);
+            font-size: 11px;
+            padding: 0 2px 2px;
         }
 
         .attach-item {
             position: relative;
             display: flex;
             align-items: center;
-            gap: 7px;
-            padding: 7px 10px;
+            gap: 8px;
+            min-width: 0;
+            padding: 7px 9px;
             border: 1px solid var(--border);
-            border-radius: 9px;
+            border-radius: 11px;
             background: var(--panel2);
             font-size: 12px;
-            margin-right: 6px;
-            margin-bottom: 6px;
+            transition: .18s;
+        }
+
+        .attach-item:hover {
+            border-color: rgba(124,92,255,.4);
+        }
+
+        .attach-preview {
+            width: 42px;
+            height: 42px;
+            flex: 0 0 42px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: rgba(255,255,255,.05);
+            display: grid;
+            place-items: center;
+        }
+
+        .attach-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .attach-file-icon {
+            font-size: 18px;
+        }
+
+        .attach-info {
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .attach-name {
+            max-width: 180px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-weight: 650;
+        }
+
+        .attach-type {
+            color: var(--muted);
+            font-size: 10px;
         }
 
         .attach-remove {
             border: 0;
             background: transparent;
             color: var(--muted);
-            padding: 0;
+            padding: 4px;
+            border-radius: 6px;
+            font-size: 16px;
+            line-height: 1;
+        }
+
+        .attach-remove:hover {
+            background: rgba(255,93,115,.12);
+            color: var(--danger);
         }
 
         .input-row {
@@ -701,6 +832,12 @@
             border-radius: 11px;
             background: var(--panel2);
             color: var(--text);
+            transition: .18s;
+        }
+
+        .attach-btn:hover {
+            background: rgba(124,92,255,.15);
+            color: var(--accent2);
         }
 
         textarea {
@@ -729,6 +866,12 @@
             color: white;
             background: linear-gradient(135deg,#7c5cff,#4f8cff);
             font-weight: 900;
+            transition: .18s;
+        }
+
+        .send-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(124,92,255,.25);
         }
 
         .send-btn.stop {
@@ -742,7 +885,9 @@
             padding: 0 10px 8px;
         }
 
-        /* MODALS */
+        /* =====================================================
+           MODALS
+        ===================================================== */
 
         .modal-backdrop {
             position: fixed;
@@ -814,6 +959,10 @@
             background: var(--panel2);
         }
 
+        /* =====================================================
+           DROP ZONE
+        ===================================================== */
+
         .drop-zone {
             position: fixed;
             inset: 10px;
@@ -837,7 +986,54 @@
             padding: 25px 35px;
             border-radius: 16px;
             font-weight: 700;
+            box-shadow: var(--shadow);
         }
+
+        /* =====================================================
+           TOAST
+        ===================================================== */
+
+        .toast-container {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 500;
+            display: grid;
+            gap: 8px;
+            pointer-events: none;
+        }
+
+        .toast {
+            max-width: 340px;
+            padding: 11px 14px;
+            border-radius: 11px;
+            border: 1px solid var(--border);
+            background: var(--panel);
+            color: var(--text);
+            box-shadow: var(--shadow);
+            font-size: 12px;
+            animation: toastIn .2s ease;
+        }
+
+        .toast.error {
+            border-color: rgba(255,93,115,.35);
+        }
+
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
 
         @media (max-width: 760px) {
             .sidebar {
@@ -882,21 +1078,35 @@
             .topbar {
                 padding: 0 10px;
             }
+
+            .model-name {
+                font-size: 13px;
+            }
+
+            .attach-name {
+                max-width: 120px;
+            }
+
+            .message-image-card {
+                width: 100%;
+            }
         }
     </style>
 </head>
 
 <body>
+
 <div class="app">
 
     <!-- SIDEBAR -->
     <aside class="sidebar" id="sidebar">
 
         <div class="brand">
-            <div class="brand-logo">Q</div>
+            <div class="brand-logo">N</div>
+
             <div>
                 <div class="brand-title">Nexora AI</div>
-                <div class="brand-sub">Powered by TinyLlama</div>
+                <div class="brand-sub"></div>
             </div>
         </div>
 
@@ -906,17 +1116,32 @@
 
         <div class="sidebar-search">
             <span>⌕</span>
-            <input id="historySearch" placeholder="Search chats...">
+            <input
+                id="historySearch"
+                placeholder="Search chats..."
+            >
         </div>
 
-        <div class="history-title">History</div>
+        <div class="history-title">
+            History
+        </div>
 
         <div class="history" id="history"></div>
 
         <div class="sidebar-bottom">
-            <button class="bottom-btn" id="exportBtn">⇩ Export current chat</button>
-            <button class="bottom-btn" id="themeBtn">☼ Toggle theme</button>
-            <button class="bottom-btn" id="aboutBtn">ⓘ About</button>
+
+            <button class="bottom-btn" id="exportBtn">
+                ⇩ Export current chat
+            </button>
+
+            <button class="bottom-btn" id="themeBtn">
+                ☼ Toggle theme
+            </button>
+
+            <button class="bottom-btn" id="aboutBtn">
+                ⓘ About
+            </button>
+
         </div>
 
     </aside>
@@ -927,40 +1152,69 @@
         <header class="topbar">
 
             <div class="top-left">
-                <button class="icon-btn mobile-menu" id="mobileMenuBtn">☰</button>
+
+                <button
+                    class="icon-btn mobile-menu"
+                    id="mobileMenuBtn"
+                    aria-label="Open menu"
+                >
+                    ☰
+                </button>
 
                 <div>
-                    <div class="model-name">TinyLlama</div>
+                    <div class="model-name">
+                        Nexora AI
+                    </div>
+
                     <div class="status">
                         <span class="status-dot"></span>
-                        Local AI
+                        Gemini + Groq
                     </div>
                 </div>
+
             </div>
 
             <div class="top-right">
-                <button class="icon-btn" id="commandBtn" title="Command palette">
+
+                <button
+                    class="icon-btn"
+                    id="commandBtn"
+                    title="Command palette"
+                    aria-label="Command palette"
+                >
                     ⌘
                 </button>
+
             </div>
 
         </header>
 
         <div class="chat-scroll" id="chatScroll">
-            <div class="chat-inner" id="chatInner"></div>
+
+            <div
+                class="chat-inner"
+                id="chatInner"
+            ></div>
+
         </div>
 
         <div class="composer-area">
 
             <div class="composer">
 
-                <div class="attachments" id="attachments"></div>
+                <div
+                    class="attachments"
+                    id="attachments"
+                ></div>
 
                 <div class="input-row">
 
-                    <button class="attach-btn"
-                            id="attachBtn"
-                            title="Attach file">
+                    <button
+                        class="attach-btn"
+                        id="attachBtn"
+                        title="Attach file or image"
+                        aria-label="Attach file or image"
+                    >
                         ＋
                     </button>
 
@@ -979,7 +1233,12 @@
                         placeholder="Message Nexora AI..."
                     ></textarea>
 
-                    <button class="send-btn" id="sendBtn" title="Send">
+                    <button
+                        class="send-btn"
+                        id="sendBtn"
+                        title="Send"
+                        aria-label="Send"
+                    >
                         ↑
                     </button>
 
@@ -994,73 +1253,123 @@
         </div>
 
     </main>
+
 </div>
 
 <!-- DROP ZONE -->
-<div class="drop-zone" id="dropZone">
-    <div>Drop files here to attach</div>
+<div
+    class="drop-zone"
+    id="dropZone"
+>
+    <div>
+        Drop files or images here to attach
+    </div>
 </div>
 
+<!-- TOASTS -->
+<div
+    class="toast-container"
+    id="toastContainer"
+></div>
+
 <!-- ABOUT -->
-<div class="modal-backdrop" id="aboutModal">
+<div
+    class="modal-backdrop"
+    id="aboutModal"
+>
+
     <div class="modal">
 
-        <button class="modal-close" data-close="aboutModal">×</button>
+        <button
+            class="modal-close"
+            data-close="aboutModal"
+        >
+            ×
+        </button>
 
         <h2>Nexora AI</h2>
 
         <p>
-            A locally running AI chatbot powered by
-            Flask, Ollama and TinyLlama.
+            An intelligent AI assistant powered by
+            Gemini and Groq through a Python Flask backend.
         </p>
 
         <p>
-            Frontend features include Markdown rendering,
+            Nexora AI supports Markdown responses,
             syntax highlighting, mathematical formulas,
-            streaming responses, chat history and file attachments.
+            streaming responses, chat history,
+            document attachments and image attachments.
         </p>
 
         <p>
-            <b>Model:</b> TinyLlama<br>
+            <b>AI Providers:</b> Gemini + Groq<br>
             <b>Backend:</b> Python Flask<br>
-            <b>AI Runtime:</b> Ollama
+            <b>Frontend:</b> HTML, CSS & JavaScript
         </p>
 
     </div>
+
 </div>
 
 <!-- COMMAND PALETTE -->
-<div class="modal-backdrop" id="commandModal">
+<div
+    class="modal-backdrop"
+    id="commandModal"
+>
 
     <div class="modal palette">
 
-        <button class="modal-close" data-close="commandModal">×</button>
+        <button
+            class="modal-close"
+            data-close="commandModal"
+        >
+            ×
+        </button>
 
         <h2>Command Palette</h2>
 
-        <input id="commandInput" placeholder="Search commands...">
+        <input
+            id="commandInput"
+            placeholder="Search commands..."
+        >
 
-        <div class="palette-items" id="commandItems">
+        <div
+            class="palette-items"
+            id="commandItems"
+        >
 
-            <div class="palette-item" data-command="new">
+            <div
+                class="palette-item"
+                data-command="new"
+            >
                 ＋ New chat
             </div>
 
-            <div class="palette-item" data-command="theme">
+            <div
+                class="palette-item"
+                data-command="theme"
+            >
                 ☼ Toggle theme
             </div>
 
-            <div class="palette-item" data-command="export">
+            <div
+                class="palette-item"
+                data-command="export"
+            >
                 ⇩ Export chat
             </div>
 
-            <div class="palette-item" data-command="about">
+            <div
+                class="palette-item"
+                data-command="about"
+            >
                 ⓘ About
             </div>
 
         </div>
 
     </div>
+
 </div>
 
 <script>
@@ -1072,61 +1381,151 @@
 
 const API_URL = "/api/chat/stream";
 
-const STORAGE_KEY = "qualibytes_gpt_chats_v3";
-const THEME_KEY = "qualibytes_gpt_theme_v3";
+const STORAGE_KEY = "nexora_ai_chats_v4";
+
+const THEME_KEY = "nexora_ai_theme_v4";
+
+const MAX_ATTACHMENTS = 8;
+
+const MAX_IMAGE_SIZE = 10 * 1024 * 1024;
+
+const MAX_TEXT_SIZE = 2 * 1024 * 1024;
+
+const MAX_TEXT_LENGTH = 20000;
+
 
 /* =========================================================
    STATE
 ========================================================= */
 
 let chats = [];
+
 let currentChatId = null;
+
 let attachedFiles = [];
+
 let controller = null;
+
 let generating = false;
+
 let userScrolledUp = false;
+
 
 /* =========================================================
    ELEMENTS
 ========================================================= */
 
-const sidebar = document.getElementById("sidebar");
-const historyEl = document.getElementById("history");
-const historySearch = document.getElementById("historySearch");
+const sidebar =
+    document.getElementById("sidebar");
 
-const chatScroll = document.getElementById("chatScroll");
-const chatInner = document.getElementById("chatInner");
+const historyEl =
+    document.getElementById("history");
 
-const messageInput = document.getElementById("messageInput");
-const sendBtn = document.getElementById("sendBtn");
+const historySearch =
+    document.getElementById("historySearch");
 
-const attachBtn = document.getElementById("attachBtn");
-const fileInput = document.getElementById("fileInput");
-const attachmentsEl = document.getElementById("attachments");
+const chatScroll =
+    document.getElementById("chatScroll");
 
-const dropZone = document.getElementById("dropZone");
+const chatInner =
+    document.getElementById("chatInner");
+
+const messageInput =
+    document.getElementById("messageInput");
+
+const sendBtn =
+    document.getElementById("sendBtn");
+
+const attachBtn =
+    document.getElementById("attachBtn");
+
+const fileInput =
+    document.getElementById("fileInput");
+
+const attachmentsEl =
+    document.getElementById("attachments");
+
+const dropZone =
+    document.getElementById("dropZone");
+
+const toastContainer =
+    document.getElementById("toastContainer");
+
 
 /* =========================================================
    INITIALIZATION
 ========================================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
 
-    loadTheme();
-    loadChats();
+        loadTheme();
 
-    if (chats.length === 0) {
-        createChat();
-    } else {
-        currentChatId = chats[0].id;
-        renderHistory();
-        renderCurrentChat();
+        loadChats();
+
+        if (chats.length === 0) {
+
+            createChat();
+
+        } else {
+
+            currentChatId = chats[0].id;
+
+            renderHistory();
+
+            renderCurrentChat();
+
+        }
+
+        configureMarked();
+
+        setupEvents();
+
     }
+);
 
-    configureMarked();
-    setupEvents();
 
-});
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showToast(
+    message,
+    type = "normal"
+) {
+
+    const toast =
+        document.createElement("div");
+
+    toast.className =
+        "toast " +
+        (type === "error"
+            ? "error"
+            : "");
+
+    toast.textContent = message;
+
+    toastContainer.appendChild(toast);
+
+    setTimeout(
+        () => {
+
+            toast.style.opacity = "0";
+
+            toast.style.transform =
+                "translateY(6px)";
+
+            setTimeout(
+                () => toast.remove(),
+                180
+            );
+
+        },
+        2800
+    );
+}
+
 
 /* =========================================================
    MARKDOWN
@@ -1135,7 +1534,11 @@ document.addEventListener("DOMContentLoaded", () => {
 function configureMarked() {
 
     if (typeof marked === "undefined") {
-        console.warn("Marked.js could not be loaded.");
+
+        console.warn(
+            "Marked.js could not be loaded."
+        );
+
         return;
     }
 
@@ -1144,6 +1547,7 @@ function configureMarked() {
         breaks: true
     });
 }
+
 
 function escapeHtml(text) {
 
@@ -1155,6 +1559,7 @@ function escapeHtml(text) {
         .replaceAll("'", "&#039;");
 }
 
+
 function renderMarkdown(text) {
 
     if (!text) {
@@ -1165,21 +1570,46 @@ function renderMarkdown(text) {
 
     try {
 
-        if (typeof marked !== "undefined") {
+        if (
+            typeof marked !==
+            "undefined"
+        ) {
+
             html = marked.parse(text);
+
         } else {
-            html = escapeHtml(text).replace(/\n/g, "<br>");
+
+            html =
+                escapeHtml(text)
+                    .replace(
+                        /\n/g,
+                        "<br>"
+                    );
+
         }
 
     } catch (error) {
 
-        console.error("Markdown error:", error);
+        console.error(
+            "Markdown error:",
+            error
+        );
 
-        html = escapeHtml(text).replace(/\n/g, "<br>");
+        html =
+            escapeHtml(text)
+                .replace(
+                    /\n/g,
+                    "<br>"
+                );
     }
 
-    if (typeof DOMPurify !== "undefined") {
-        html = DOMPurify.sanitize(html);
+    if (
+        typeof DOMPurify !==
+        "undefined"
+    ) {
+
+        html =
+            DOMPurify.sanitize(html);
     }
 
     html = renderMath(html);
@@ -1187,9 +1617,13 @@ function renderMarkdown(text) {
     return html;
 }
 
+
 function renderMath(html) {
 
-    if (typeof katex === "undefined") {
+    if (
+        typeof katex ===
+        "undefined"
+    ) {
         return html;
     }
 
@@ -1200,12 +1634,23 @@ function renderMath(html) {
             (_, formula) => {
 
                 try {
-                    return katex.renderToString(formula.trim(), {
-                        displayMode: true,
-                        throwOnError: false
-                    });
+
+                    return katex.renderToString(
+                        formula.trim(),
+                        {
+                            displayMode: true,
+                            throwOnError: false
+                        }
+                    );
+
                 } catch {
-                    return `<code>${escapeHtml(formula)}</code>`;
+
+                    return (
+                        "<code>" +
+                        escapeHtml(formula) +
+                        "</code>"
+                    );
+
                 }
 
             }
@@ -1216,23 +1661,40 @@ function renderMath(html) {
             (_, formula) => {
 
                 try {
-                    return katex.renderToString(formula.trim(), {
-                        displayMode: false,
-                        throwOnError: false
-                    });
+
+                    return katex.renderToString(
+                        formula.trim(),
+                        {
+                            displayMode: false,
+                            throwOnError: false
+                        }
+                    );
+
                 } catch {
-                    return `<code>${escapeHtml(formula)}</code>`;
+
+                    return (
+                        "<code>" +
+                        escapeHtml(formula) +
+                        "</code>"
+                    );
+
                 }
 
             }
         );
 
     } catch (error) {
-        console.warn("KaTeX rendering failed:", error);
+
+        console.warn(
+            "KaTeX rendering failed:",
+            error
+        );
+
     }
 
     return html;
 }
+
 
 /* =========================================================
    CHAT STORAGE
@@ -1242,9 +1704,15 @@ function loadChats() {
 
     try {
 
-        const saved = localStorage.getItem(STORAGE_KEY);
+        const saved =
+            localStorage.getItem(
+                STORAGE_KEY
+            );
 
-        chats = saved ? JSON.parse(saved) : [];
+        chats =
+            saved
+                ? JSON.parse(saved)
+                : [];
 
         if (!Array.isArray(chats)) {
             chats = [];
@@ -1253,25 +1721,41 @@ function loadChats() {
     } catch {
 
         chats = [];
+
     }
 }
 
+
 function saveChats() {
 
-    localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify(chats)
-    );
+    try {
+
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(chats)
+        );
+
+    } catch (error) {
+
+        console.warn(
+            "Could not save chat history:",
+            error
+        );
+
+    }
 
     renderHistory();
 }
 
+
 function createChat() {
 
     const chat = {
-        id: crypto.randomUUID
-            ? crypto.randomUUID()
-            : String(Date.now()),
+
+        id:
+            crypto.randomUUID
+                ? crypto.randomUUID()
+                : String(Date.now()),
 
         title: "New chat",
 
@@ -1280,11 +1764,13 @@ function createChat() {
         createdAt: Date.now(),
 
         messages: []
+
     };
 
     chats.unshift(chat);
 
-    currentChatId = chat.id;
+    currentChatId =
+        chat.id;
 
     saveChats();
 
@@ -1293,12 +1779,16 @@ function createChat() {
     messageInput.focus();
 }
 
+
 function getCurrentChat() {
 
     return chats.find(
-        chat => chat.id === currentChatId
+        chat =>
+            chat.id ===
+            currentChatId
     );
 }
+
 
 /* =========================================================
    HISTORY
@@ -1307,25 +1797,46 @@ function getCurrentChat() {
 function renderHistory() {
 
     const query =
-        historySearch.value.trim().toLowerCase();
+        historySearch.value
+            .trim()
+            .toLowerCase();
 
     historyEl.innerHTML = "";
 
-    const filtered = chats
-        .filter(chat =>
-            !query ||
-            chat.title.toLowerCase().includes(query)
-        )
-        .sort((a,b) => {
+    const filtered =
+        chats
+            .filter(
+                chat =>
+                    !query ||
+                    chat.title
+                        .toLowerCase()
+                        .includes(query)
+            )
+            .sort(
+                (a, b) => {
 
-            if (a.pinned !== b.pinned) {
-                return a.pinned ? -1 : 1;
-            }
+                    if (
+                        a.pinned !==
+                        b.pinned
+                    ) {
 
-            return b.createdAt - a.createdAt;
-        });
+                        return a.pinned
+                            ? -1
+                            : 1;
+                    }
 
-    if (filtered.length === 0) {
+                    return (
+                        b.createdAt -
+                        a.createdAt
+                    );
+
+                }
+            );
+
+    if (
+        filtered.length ===
+        0
+    ) {
 
         historyEl.innerHTML = `
             <div style="
@@ -1340,131 +1851,203 @@ function renderHistory() {
         return;
     }
 
-    filtered.forEach(chat => {
+    filtered.forEach(
+        chat => {
 
-        const item = document.createElement("div");
-
-        item.className =
-            "history-item " +
-            (chat.id === currentChatId ? "active" : "");
-
-        const name = document.createElement("div");
-
-        name.className = "history-name";
-
-        name.textContent =
-            (chat.pinned ? "📌 " : "") +
-            (chat.title || "New chat");
-
-        const actions =
-            document.createElement("div");
-
-        actions.className = "history-actions";
-
-        const pin = document.createElement("button");
-
-        pin.textContent = "•";
-
-        pin.title =
-            chat.pinned
-                ? "Unpin"
-                : "Pin";
-
-        pin.onclick = event => {
-
-            event.stopPropagation();
-
-            chat.pinned = !chat.pinned;
-
-            saveChats();
-        };
-
-        const rename =
-            document.createElement("button");
-
-        rename.textContent = "✎";
-
-        rename.title = "Rename";
-
-        rename.onclick = event => {
-
-            event.stopPropagation();
-
-            const title =
-                prompt(
-                    "Chat name:",
-                    chat.title
+            const item =
+                document.createElement(
+                    "div"
                 );
 
-            if (title && title.trim()) {
-
-                chat.title =
-                    title.trim().slice(0,70);
-
-                saveChats();
-
-                renderCurrentChat();
-            }
-        };
-
-        const del =
-            document.createElement("button");
-
-        del.textContent = "×";
-
-        del.title = "Delete";
-
-        del.onclick = event => {
-
-            event.stopPropagation();
-
-            if (!confirm("Delete this chat?")) {
-                return;
-            }
-
-            chats =
-                chats.filter(
-                    c => c.id !== chat.id
+            item.className =
+                "history-item " +
+                (
+                    chat.id ===
+                    currentChatId
+                        ? "active"
+                        : ""
                 );
 
-            if (currentChatId === chat.id) {
+            const name =
+                document.createElement(
+                    "div"
+                );
 
-                currentChatId =
-                    chats[0]?.id || null;
+            name.className =
+                "history-name";
 
-                if (!currentChatId) {
-                    createChat();
-                    return;
-                }
-            }
+            name.textContent =
+                (
+                    chat.pinned
+                        ? "📌 "
+                        : ""
+                ) +
+                (
+                    chat.title ||
+                    "New chat"
+                );
 
-            saveChats();
+            const actions =
+                document.createElement(
+                    "div"
+                );
 
-            renderCurrentChat();
-        };
+            actions.className =
+                "history-actions";
 
-        actions.append(pin, rename, del);
+            const pin =
+                document.createElement(
+                    "button"
+                );
 
-        item.append(name, actions);
+            pin.textContent = "•";
 
-        item.onclick = () => {
+            pin.title =
+                chat.pinned
+                    ? "Unpin"
+                    : "Pin";
 
-            if (generating) {
-                return;
-            }
+            pin.onclick =
+                event => {
 
-            currentChatId = chat.id;
+                    event.stopPropagation();
 
-            renderHistory();
+                    chat.pinned =
+                        !chat.pinned;
 
-            renderCurrentChat();
+                    saveChats();
 
-            sidebar.classList.remove("open");
-        };
+                };
 
-        historyEl.appendChild(item);
-    });
+            const rename =
+                document.createElement(
+                    "button"
+                );
+
+            rename.textContent = "✎";
+
+            rename.title = "Rename";
+
+            rename.onclick =
+                event => {
+
+                    event.stopPropagation();
+
+                    const title =
+                        prompt(
+                            "Chat name:",
+                            chat.title
+                        );
+
+                    if (
+                        title &&
+                        title.trim()
+                    ) {
+
+                        chat.title =
+                            title
+                                .trim()
+                                .slice(
+                                    0,
+                                    70
+                                );
+
+                        saveChats();
+
+                        renderCurrentChat();
+                    }
+
+                };
+
+            const del =
+                document.createElement(
+                    "button"
+                );
+
+            del.textContent = "×";
+
+            del.title = "Delete";
+
+            del.onclick =
+                event => {
+
+                    event.stopPropagation();
+
+                    if (
+                        !confirm(
+                            "Delete this chat?"
+                        )
+                    ) {
+                        return;
+                    }
+
+                    chats =
+                        chats.filter(
+                            c =>
+                                c.id !==
+                                chat.id
+                        );
+
+                    if (
+                        currentChatId ===
+                        chat.id
+                    ) {
+
+                        currentChatId =
+                            chats[0]?.id ||
+                            null;
+
+                        if (
+                            !currentChatId
+                        ) {
+
+                            createChat();
+
+                            return;
+                        }
+                    }
+
+                    saveChats();
+
+                    renderCurrentChat();
+
+                };
+
+            actions.append(
+                pin,
+                rename,
+                del
+            );
+
+            item.append(
+                name,
+                actions
+            );
+
+            item.onclick =
+                () => {
+
+                    if (generating) {
+                        return;
+                    }
+
+                    currentChatId =
+                        chat.id;
+
+                    renderHistory();
+
+                    renderCurrentChat();
+
+                    sidebar.classList
+                        .remove("open");
+                };
+
+            historyEl.appendChild(item);
+
+        }
+    );
 }
+
 
 /* =========================================================
    CHAT RENDERING
@@ -1472,7 +2055,8 @@ function renderHistory() {
 
 function renderCurrentChat() {
 
-    const chat = getCurrentChat();
+    const chat =
+        getCurrentChat();
 
     if (!chat) {
         return;
@@ -1480,7 +2064,9 @@ function renderCurrentChat() {
 
     chatInner.innerHTML = "";
 
-    if (!chat.messages.length) {
+    if (
+        !chat.messages.length
+    ) {
 
         renderWelcome();
 
@@ -1494,57 +2080,88 @@ function renderCurrentChat() {
                 message,
                 index
             );
+
         }
     );
 
-    requestAnimationFrame(() => {
-        scrollToBottom(true);
-    });
+    requestAnimationFrame(
+        () => {
+            scrollToBottom(true);
+        }
+    );
 }
+
 
 function renderWelcome() {
 
     chatInner.innerHTML = `
+
         <div class="welcome">
 
-            <div class="welcome-logo">Q</div>
+            <div class="welcome-logo">
+                N
+            </div>
 
-            <h1>How can I help you?</h1>
+            <h1>
+                How can I help you?
+            </h1>
 
             <p>
-                Ask anything, write code, explain a topic,
-                solve a problem or brainstorm an idea.
+                Ask anything, write code,
+                analyze documents or images,
+                explain a topic, solve a problem
+                or brainstorm an idea.
             </p>
 
             <div class="prompts">
 
-                <button class="prompt"
-                        data-prompt="Explain JavaScript in simple words">
-                    <b>Explain JavaScript</b><br>
+                <button
+                    class="prompt"
+                    data-prompt="Explain JavaScript in simple words"
+                >
+                    <b>
+                        Explain JavaScript
+                    </b>
+                    <br>
                     <span style="color:var(--muted)">
                         in simple words
                     </span>
                 </button>
 
-                <button class="prompt"
-                        data-prompt="Write a simple C program to find duplicate values in an array">
-                    <b>Help with C programming</b><br>
+                <button
+                    class="prompt"
+                    data-prompt="Write a simple C program to find duplicate values in an array"
+                >
+                    <b>
+                        Help with C programming
+                    </b>
+                    <br>
                     <span style="color:var(--muted)">
                         simple beginner-friendly code
                     </span>
                 </button>
 
-                <button class="prompt"
-                        data-prompt="Give me 5 unique project ideas for a B.Tech CSE resume">
-                    <b>Project ideas</b><br>
+                <button
+                    class="prompt"
+                    data-prompt="Give me 5 unique project ideas for a B.Tech CSE resume"
+                >
+                    <b>
+                        Project ideas
+                    </b>
+                    <br>
                     <span style="color:var(--muted)">
                         improve my resume
                     </span>
                 </button>
 
-                <button class="prompt"
-                        data-prompt="Teach me HTML, CSS and JavaScript step by step">
-                    <b>Learn web development</b><br>
+                <button
+                    class="prompt"
+                    data-prompt="Teach me HTML, CSS and JavaScript step by step"
+                >
+                    <b>
+                        Learn web development
+                    </b>
+                    <br>
                     <span style="color:var(--muted)">
                         step-by-step
                     </span>
@@ -1553,258 +2170,447 @@ function renderWelcome() {
             </div>
 
         </div>
+
     `;
 
     document
         .querySelectorAll(".prompt")
-        .forEach(button => {
+        .forEach(
+            button => {
 
-            button.onclick = () => {
+                button.onclick =
+                    () => {
 
-                messageInput.value =
-                    button.dataset.prompt;
+                        messageInput.value =
+                            button.dataset
+                                .prompt;
 
-                autoResize();
+                        autoResize();
 
-                messageInput.focus();
-            };
+                        messageInput.focus();
 
-        });
+                    };
+
+            }
+        );
 }
 
-function renderMessage(message, index) {
+
+function renderMessage(
+    message,
+    index
+) {
 
     const wrapper =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
     wrapper.className =
         "message " +
-        (message.role === "user"
-            ? "user"
-            : "assistant");
+        (
+            message.role === "user"
+                ? "user"
+                : "assistant"
+        );
 
     const avatar =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
-    avatar.className = "avatar";
+    avatar.className =
+        "avatar";
 
     avatar.textContent =
         message.role === "user"
             ? "YOU"
-            : "Q";
+            : "N";
 
     const content =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
     content.className =
         "message-content";
 
     const text =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
-    text.className = "message-text";
+    text.className =
+        "message-text";
 
-    if (message.role === "user") {
+    if (
+        message.role ===
+        "user"
+    ) {
 
         text.innerHTML =
-            renderUserMessage(message);
+            renderUserMessage(
+                message
+            );
 
     } else {
 
         text.innerHTML =
             renderMarkdown(
-                message.content || ""
+                message.content ||
+                ""
             );
 
-        if (message.streaming) {
+        if (
+            message.streaming
+        ) {
 
             text.innerHTML +=
-                `<span class="streaming-cursor"></span>`;
+                `
+                <span
+                    class="streaming-cursor"
+                ></span>
+                `;
+
         }
+
     }
 
     content.appendChild(text);
 
-    if (message.role === "assistant") {
+    if (
+        message.role ===
+        "assistant"
+    ) {
 
         const tools =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
-        tools.className = "message-tools";
+        tools.className =
+            "message-tools";
 
         const copy =
-            createTool("Copy", () => {
+            createTool(
+                "Copy",
+                () => {
 
-                navigator.clipboard
-                    .writeText(message.content || "");
+                    navigator.clipboard
+                        .writeText(
+                            message.content ||
+                            ""
+                        );
 
-            });
+                }
+            );
 
         const regenerate =
-            createTool("Regenerate", () => {
+            createTool(
+                "Regenerate",
+                () => {
 
-                regenerateMessage(index);
+                    regenerateMessage(
+                        index
+                    );
 
-            });
+                }
+            );
 
         const speak =
-            createTool("🔊", () => {
+            createTool(
+                "🔊",
+                () => {
 
-                speakText(message.content || "");
+                    speakText(
+                        message.content ||
+                        ""
+                    );
 
-            });
+                }
+            );
 
-        tools.append(copy, regenerate, speak);
+        tools.append(
+            copy,
+            regenerate,
+            speak
+        );
 
-        content.appendChild(tools);
+        content.appendChild(
+            tools
+        );
+
     }
 
-    if (message.role === "user") {
+    if (
+        message.role ===
+        "user"
+    ) {
 
         const tools =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
-        tools.className = "message-tools";
+        tools.className =
+            "message-tools";
 
         const edit =
-            createTool("Edit", () => {
+            createTool(
+                "Edit",
+                () => {
 
-                editUserMessage(index);
+                    editUserMessage(
+                        index
+                    );
 
-            });
+                }
+            );
 
         tools.appendChild(edit);
 
-        content.appendChild(tools);
+        content.appendChild(
+            tools
+        );
     }
 
-    wrapper.append(avatar, content);
+    wrapper.append(
+        avatar,
+        content
+    );
 
-    chatInner.appendChild(wrapper);
+    chatInner.appendChild(
+        wrapper
+    );
 
     highlightCode(wrapper);
 }
 
-function createTool(text, callback) {
+
+function createTool(
+    text,
+    callback
+) {
 
     const button =
-        document.createElement("button");
+        document.createElement(
+            "button"
+        );
 
-    button.className = "tool-btn";
+    button.className =
+        "tool-btn";
 
-    button.textContent = text;
+    button.textContent =
+        text;
 
-    button.onclick = callback;
+    button.onclick =
+        callback;
 
     return button;
 }
 
-function renderUserMessage(message) {
+
+/* =========================================================
+   USER MESSAGE + ATTACHMENTS
+========================================================= */
+
+function renderUserMessage(
+    message
+) {
 
     let html =
-        escapeHtml(message.content || "")
-            .replace(/\n/g, "<br>");
+        escapeHtml(
+            message.content ||
+            ""
+        ).replace(
+            /\n/g,
+            "<br>"
+        );
 
-    if (message.attachments?.length) {
+    if (
+        message.attachments?.length
+    ) {
 
-        html += "<div style='margin-top:8px'>";
-
-        message.attachments.forEach(file => {
-
-            html += `
-                <span class="attachment-chip">
-                    📎 ${escapeHtml(file.name)}
-                </span>
+        html +=
+            `
+            <div class="message-attachments">
             `;
 
-        });
+        message.attachments
+            .forEach(
+                file => {
 
-        html += "</div>";
+                    if (
+                        file.type &&
+                        file.type.startsWith(
+                            "image/"
+                        ) &&
+                        file.dataUrl
+                    ) {
+
+                        html += `
+                            <div class="message-image-card">
+                                <img
+                                    src="${file.dataUrl}"
+                                    alt="${escapeHtml(file.name)}"
+                                    loading="lazy"
+                                    decoding="async"
+                                >
+                            </div>
+                        `;
+
+                    } else {
+
+                        html += `
+                            <div class="message-file-card">
+                                <span>📎</span>
+                                <span class="message-file-name">
+                                    ${escapeHtml(file.name)}
+                                </span>
+                            </div>
+                        `;
+
+                    }
+
+                }
+            );
+
+        html +=
+            "</div>";
     }
 
     return html;
 }
 
-function highlightCode(container) {
 
-    if (typeof hljs === "undefined") {
+function highlightCode(
+    container
+) {
+
+    if (
+        typeof hljs ===
+        "undefined"
+    ) {
         return;
     }
 
     container
-        .querySelectorAll("pre code")
-        .forEach(code => {
+        .querySelectorAll(
+            "pre code"
+        )
+        .forEach(
+            code => {
 
-            try {
-                hljs.highlightElement(code);
-            } catch {}
+                try {
+                    hljs.highlightElement(
+                        code
+                    );
+                } catch {}
 
-            const pre = code.parentElement;
+                const pre =
+                    code.parentElement;
 
-            if (!pre || pre.dataset.enhanced) {
-                return;
-            }
+                if (
+                    !pre ||
+                    pre.dataset.enhanced
+                ) {
+                    return;
+                }
 
-            pre.dataset.enhanced = "1";
+                pre.dataset.enhanced =
+                    "1";
 
-            const wrapper =
-                document.createElement("div");
+                const wrapper =
+                    document.createElement(
+                        "div"
+                    );
 
-            wrapper.className =
-                "code-wrapper";
+                wrapper.className =
+                    "code-wrapper";
 
-            const header =
-                document.createElement("div");
+                const header =
+                    document.createElement(
+                        "div"
+                    );
 
-            header.className =
-                "code-header";
+                header.className =
+                    "code-header";
 
-            let language =
-                "code";
+                let language =
+                    "code";
 
-            const match =
-                code.className.match(
-                    /language-([\w-]+)/
+                const match =
+                    code.className.match(
+                        /language-([\w-]+)/
+                    );
+
+                if (match) {
+                    language =
+                        match[1];
+                }
+
+                const label =
+                    document.createElement(
+                        "span"
+                    );
+
+                label.textContent =
+                    language;
+
+                const copy =
+                    document.createElement(
+                        "button"
+                    );
+
+                copy.className =
+                    "code-copy";
+
+                copy.textContent =
+                    "Copy";
+
+                copy.onclick =
+                    () => {
+
+                        navigator.clipboard
+                            .writeText(
+                                code.textContent
+                            );
+
+                        copy.textContent =
+                            "Copied";
+
+                        setTimeout(
+                            () => {
+
+                                copy.textContent =
+                                    "Copy";
+
+                            },
+                            1200
+                        );
+
+                    };
+
+                header.append(
+                    label,
+                    copy
                 );
 
-            if (match) {
-                language = match[1];
+                pre.parentNode
+                    .insertBefore(
+                        wrapper,
+                        pre
+                    );
+
+                wrapper.append(
+                    header,
+                    pre
+                );
+
             }
-
-            const label =
-                document.createElement("span");
-
-            label.textContent = language;
-
-            const copy =
-                document.createElement("button");
-
-            copy.className = "code-copy";
-
-            copy.textContent = "Copy";
-
-            copy.onclick = () => {
-
-                navigator.clipboard
-                    .writeText(code.textContent);
-
-                copy.textContent = "Copied";
-
-                setTimeout(() => {
-                    copy.textContent = "Copy";
-                }, 1200);
-            };
-
-            header.append(label, copy);
-
-            pre.parentNode.insertBefore(
-                wrapper,
-                pre
-            );
-
-            wrapper.append(header, pre);
-        });
+        );
 }
+
 
 /* =========================================================
    SEND MESSAGE
@@ -1813,48 +2619,160 @@ function highlightCode(container) {
 async function sendMessage() {
 
     if (generating) {
+
         stopGeneration();
+
         return;
     }
 
     const text =
         messageInput.value.trim();
 
-    if (!text && attachedFiles.length === 0) {
+    if (
+        !text &&
+        attachedFiles.length === 0
+    ) {
+
         return;
     }
 
-    let chat = getCurrentChat();
+    let chat =
+        getCurrentChat();
 
     if (!chat) {
 
         createChat();
 
-        chat = getCurrentChat();
+        chat =
+            getCurrentChat();
     }
 
-    const attachmentData =
-        await prepareAttachments();
+    /* =====================================================
+       PDF QUESTION & ANSWER
+    ===================================================== */
+
+    const pdfFile =
+        attachedFiles.find(
+            file => isPdfFile(file)
+        );
+
+    if (pdfFile) {
+
+        if (!text) {
+
+            showToast(
+                "Please enter a question about the PDF.",
+                "error"
+            );
+
+            return;
+        }
+
+        const userMessage = {
+
+            role: "user",
+
+            content: text,
+
+            attachments: [
+                {
+                    name: pdfFile.name,
+                    type: "application/pdf"
+                }
+            ]
+
+        };
+
+        chat.messages.push(
+            userMessage
+        );
+
+        if (
+            chat.title ===
+                "New chat"
+        ) {
+
+            chat.title =
+                text
+                    .replace(/\s+/g, " ")
+                    .slice(0, 55);
+
+        }
+
+        messageInput.value = "";
+
+        attachedFiles = [];
+
+        renderAttachments();
+
+        saveChats();
+
+        renderCurrentChat();
+
+        await askPdfQuestion(
+            chat,
+            pdfFile,
+            text
+        );
+
+        return;
+    }
+
+    /* =====================================================
+       NORMAL CHAT
+    ===================================================== */
+
+    let attachmentData;
+
+    try {
+
+        attachmentData =
+            await prepareAttachments();
+
+    } catch (error) {
+
+        showToast(
+            error.message ||
+            "Could not prepare attachment.",
+            "error"
+        );
+
+        return;
+    }
 
     const userMessage = {
 
         role: "user",
 
-        content: text || "Please analyze the attached file(s).",
+        content:
+            text ||
+            "Please analyze the attached file(s).",
 
         attachments:
-            attachedFiles.map(
+            attachmentData.map(
                 file => ({
+
                     name: file.name,
-                    type: file.type
+
+                    type: file.type ||
+                        "application/octet-stream",
+
+                    dataUrl:
+                        file.dataUrl ||
+                        null
+
                 })
             )
+
     };
 
-    chat.messages.push(userMessage);
+    chat.messages.push(
+        userMessage
+    );
 
     if (
-        chat.title === "New chat" &&
+        chat.title ===
+            "New chat" &&
         text
     ) {
 
@@ -1862,6 +2780,7 @@ async function sendMessage() {
             text
                 .replace(/\s+/g, " ")
                 .slice(0, 55);
+
     }
 
     messageInput.value = "";
@@ -1879,7 +2798,126 @@ async function sendMessage() {
         attachmentData
     );
 }
+/* =========================================================
+   PDF QUESTION & ANSWER
+========================================================= */
 
+async function askPdfQuestion(
+    chat,
+    pdfFile,
+    question
+) {
+
+    generating = true;
+
+    updateSendButton();
+
+    const assistantMessage = {
+
+        role: "assistant",
+
+        content: "Analyzing the PDF...",
+
+        streaming: true
+
+    };
+
+    chat.messages.push(
+        assistantMessage
+    );
+
+    renderCurrentChat();
+
+    try {
+
+        const formData =
+            new FormData();
+
+        formData.append(
+            "file",
+            pdfFile
+        );
+
+        formData.append(
+            "question",
+            question
+        );
+
+        const response =
+            await fetch(
+                "/api/pdf/ask",
+                {
+                    method: "POST",
+                    body: formData
+                }
+            );
+
+        if (!response.ok) {
+
+            let errorText =
+                `Server error: ${response.status}`;
+
+            try {
+
+                const errorJson =
+                    await response.json();
+
+                if (errorJson.error) {
+
+                    errorText =
+                        errorJson.error;
+                }
+
+            } catch {}
+
+            throw new Error(
+                errorText
+            );
+        }
+
+        const result =
+            await response.json();
+
+        assistantMessage.content =
+            result.answer ||
+            "I couldn't find an answer in the PDF.";
+
+        assistantMessage.streaming =
+            false;
+
+        saveChats();
+
+        renderCurrentChat();
+
+    } catch (error) {
+
+        console.error(
+            "PDF request failed:",
+            error
+        );
+
+        assistantMessage.streaming =
+            false;
+
+        assistantMessage.content =
+            "⚠️ **Unable to analyze the PDF.**\n\n" +
+            (
+                error.message ||
+                "Unknown error"
+            );
+
+        saveChats();
+
+        renderCurrentChat();
+
+    } finally {
+
+        generating = false;
+
+        updateSendButton();
+
+    }
+}
 /* =========================================================
    STREAMING
 ========================================================= */
@@ -1903,6 +2941,7 @@ async function streamResponse(
         content: "",
 
         streaming: true
+
     };
 
     chat.messages.push(
@@ -1918,47 +2957,58 @@ async function streamResponse(
 
         const messages =
             chat.messages
-                .filter(message =>
-                    message.role === "user" ||
-                    message.role === "assistant"
+                .filter(
+                    message =>
+                        message.role ===
+                            "user" ||
+                        message.role ===
+                            "assistant"
                 )
-                .map(message => ({
-                    role: message.role,
-                    content: message.content || ""
-                }));
+                .map(
+                    message => ({
 
-        /*
-         * IMPORTANT:
-         * Do NOT send the empty streaming assistant
-         * placeholder to Ollama.
-         */
+                        role:
+                            message.role,
+
+                        content:
+                            message.content ||
+                            ""
+
+                    })
+                );
 
         const cleanMessages =
             messages.slice(0, -1);
 
         const response =
-            await fetch(API_URL, {
+            await fetch(
+                API_URL,
+                {
+                    method: "POST",
 
-                method: "POST",
+                    headers: {
+                        "Content-Type":
+                            "application/json",
 
-                headers: {
-                    "Content-Type":
-                        "application/json",
-                    "Accept":
-                        "text/event-stream"
-                },
+                        "Accept":
+                            "text/event-stream"
+                    },
 
-                body: JSON.stringify({
+                    body:
+                        JSON.stringify({
 
-                    messages: cleanMessages,
+                            messages:
+                                cleanMessages,
 
-                    attachments:
-                        attachmentData
-                }),
+                            attachments:
+                                attachmentData
 
-                signal:
-                    controller.signal
-            });
+                        }),
+
+                    signal:
+                        controller.signal
+                }
+            );
 
         if (!response.ok) {
 
@@ -1970,17 +3020,23 @@ async function streamResponse(
                 const errorJson =
                     await response.json();
 
-                if (errorJson.error) {
+                if (
+                    errorJson.error
+                ) {
+
                     errorText =
                         errorJson.error;
                 }
 
             } catch {}
 
-            throw new Error(errorText);
+            throw new Error(
+                errorText
+            );
         }
 
         if (!response.body) {
+
             throw new Error(
                 "Streaming is not supported by this browser."
             );
@@ -1990,7 +3046,9 @@ async function streamResponse(
             response.body.getReader();
 
         const decoder =
-            new TextDecoder("utf-8");
+            new TextDecoder(
+                "utf-8"
+            );
 
         let buffer = "";
 
@@ -2009,35 +3067,47 @@ async function streamResponse(
             buffer +=
                 decoder.decode(
                     value,
-                    { stream: true }
+                    {
+                        stream: true
+                    }
                 );
 
             const events =
-                buffer.split("\n\n");
+                buffer.split(
+                    "\n\n"
+                );
 
             buffer =
-                events.pop() || "";
+                events.pop() ||
+                "";
 
-            for (const event of events) {
+            for (
+                const event of events
+            ) {
 
                 processSSEEvent(
                     event,
                     assistantMessage,
                     assistantIndex
                 );
+
             }
         }
 
-        if (buffer.trim()) {
+        if (
+            buffer.trim()
+        ) {
 
             processSSEEvent(
                 buffer,
                 assistantMessage,
                 assistantIndex
             );
+
         }
 
-        assistantMessage.streaming = false;
+        assistantMessage.streaming =
+            false;
 
         saveChats();
 
@@ -2046,18 +3116,21 @@ async function streamResponse(
     } catch (error) {
 
         if (
-            error.name === "AbortError"
+            error.name ===
+            "AbortError"
         ) {
 
             assistantMessage.streaming =
                 false;
 
             if (
-                !assistantMessage.content.trim()
+                !assistantMessage.content
+                    .trim()
             ) {
 
                 assistantMessage.content =
                     "Generation stopped.";
+
             }
 
         } else {
@@ -2076,6 +3149,7 @@ async function streamResponse(
                     error.message ||
                     "Unknown error"
                 );
+
         }
 
         saveChats();
@@ -2089,8 +3163,10 @@ async function streamResponse(
         controller = null;
 
         updateSendButton();
+
     }
 }
+
 
 function processSSEEvent(
     event,
@@ -2101,9 +3177,15 @@ function processSSEEvent(
     const lines =
         event.split("\n");
 
-    for (const line of lines) {
+    for (
+        const line of lines
+    ) {
 
-        if (!line.startsWith("data:")) {
+        if (
+            !line.startsWith(
+                "data:"
+            )
+        ) {
             continue;
         }
 
@@ -2117,43 +3199,69 @@ function processSSEEvent(
         let data;
 
         try {
-            data = JSON.parse(raw);
+
+            data =
+                JSON.parse(raw);
+
         } catch {
+
             continue;
+
         }
 
-        if (data.type === "token") {
+        if (
+            data.type ===
+            "token"
+        ) {
 
             assistantMessage.content +=
-                data.token || "";
+                data.token ||
+                "";
 
             updateStreamingMessage(
                 assistantIndex
             );
 
-            if (!userScrolledUp) {
+            if (
+                !userScrolledUp
+            ) {
+
                 scrollToBottom();
+
             }
 
-        } else if (data.type === "error") {
+        } else if (
+            data.type ===
+            "error"
+        ) {
 
             throw new Error(
                 data.error ||
                 "AI generation failed."
             );
 
-        } else if (data.type === "done") {
+        } else if (
+            data.type ===
+            "done"
+        ) {
 
             assistantMessage.streaming =
                 false;
+
         }
+
     }
 }
 
-function updateStreamingMessage(index) {
+
+function updateStreamingMessage(
+    index
+) {
 
     const messageElement =
-        chatInner.children[index];
+        chatInner.children[
+            index
+        ];
 
     if (!messageElement) {
         return;
@@ -2184,12 +3292,19 @@ function updateStreamingMessage(index) {
         ) +
         (
             message.streaming
-                ? `<span class="streaming-cursor"></span>`
+                ? `
+                    <span
+                        class="streaming-cursor"
+                    ></span>
+                `
                 : ""
         );
 
-    highlightCode(messageElement);
+    highlightCode(
+        messageElement
+    );
 }
+
 
 /* =========================================================
    STOP
@@ -2198,7 +3313,9 @@ function updateStreamingMessage(index) {
 function stopGeneration() {
 
     if (controller) {
+
         controller.abort();
+
     }
 
     generating = false;
@@ -2206,33 +3323,43 @@ function stopGeneration() {
     updateSendButton();
 }
 
+
 function updateSendButton() {
 
     if (generating) {
 
-        sendBtn.textContent = "■";
+        sendBtn.textContent =
+            "■";
 
-        sendBtn.classList.add("stop");
+        sendBtn.classList.add(
+            "stop"
+        );
 
         sendBtn.title =
             "Stop generation";
 
     } else {
 
-        sendBtn.textContent = "↑";
+        sendBtn.textContent =
+            "↑";
 
-        sendBtn.classList.remove("stop");
+        sendBtn.classList.remove(
+            "stop"
+        );
 
         sendBtn.title =
             "Send";
     }
 }
 
+
 /* =========================================================
    REGENERATE
 ========================================================= */
 
-async function regenerateMessage(index) {
+async function regenerateMessage(
+    index
+) {
 
     if (generating) {
         return;
@@ -2257,12 +3384,16 @@ async function regenerateMessage(index) {
 
     if (
         !previousUser ||
-        previousUser.role !== "user"
+        previousUser.role !==
+            "user"
     ) {
         return;
     }
 
-    chat.messages.splice(index, 1);
+    chat.messages.splice(
+        index,
+        1
+    );
 
     renderCurrentChat();
 
@@ -2272,11 +3403,14 @@ async function regenerateMessage(index) {
     );
 }
 
+
 /* =========================================================
    EDIT USER MESSAGE
 ========================================================= */
 
-function editUserMessage(index) {
+function editUserMessage(
+    index
+) {
 
     if (generating) {
         return;
@@ -2293,10 +3427,14 @@ function editUserMessage(index) {
     }
 
     messageInput.value =
-        message.content || "";
+        message.content ||
+        "";
 
     chat.messages =
-        chat.messages.slice(0, index);
+        chat.messages.slice(
+            0,
+            index
+        );
 
     saveChats();
 
@@ -2307,98 +3445,516 @@ function editUserMessage(index) {
     messageInput.focus();
 }
 
+
 /* =========================================================
-   FILES
+   FILE VALIDATION
+========================================================= */
+
+function isImageFile(file) {
+
+    return Boolean(
+        file.type &&
+        file.type.startsWith(
+            "image/"
+        )
+    );
+}
+
+
+function isSupportedTextFile(
+    file
+) {
+
+    return (
+        file.type.startsWith(
+            "text/"
+        ) ||
+        /\.(txt|md|json|csv|js|html|css|py|java|c|cpp|h)$/i
+            .test(file.name)
+    );
+}
+
+
+function isPdfFile(file) {
+
+    return (
+        file.type ===
+            "application/pdf" ||
+        /\.pdf$/i.test(
+            file.name
+        )
+    );
+}
+
+
+function validateFile(file) {
+
+    if (
+        isImageFile(file)
+    ) {
+
+        if (
+            file.size >
+            MAX_IMAGE_SIZE
+        ) {
+
+            return {
+                valid: false,
+                message:
+                    `${file.name} is larger than 10 MB.`
+            };
+
+        }
+
+        return {
+            valid: true
+        };
+    }
+
+    if (
+        isSupportedTextFile(file) ||
+        isPdfFile(file)
+    ) {
+
+        if (
+            file.size >
+            MAX_TEXT_SIZE
+        ) {
+
+            return {
+                valid: false,
+                message:
+                    `${file.name} is larger than 2 MB.`
+            };
+
+        }
+
+        return {
+            valid: true
+        };
+    }
+
+    return {
+        valid: false,
+        message:
+            `${file.name} is not a supported file type.`
+    };
+}
+
+
+/* =========================================================
+   ATTACHMENTS UI
 ========================================================= */
 
 function renderAttachments() {
 
     attachmentsEl.innerHTML = "";
 
-    if (!attachedFiles.length) {
+    if (
+        !attachedFiles.length
+    ) {
 
-        attachmentsEl.classList.remove("show");
+        attachmentsEl.classList
+            .remove("show");
 
         return;
     }
 
-    attachmentsEl.classList.add("show");
+    attachmentsEl.classList
+        .add("show");
+
+    const count =
+        document.createElement(
+            "div"
+        );
+
+    count.className =
+        "attachment-count";
+
+    count.textContent =
+        `${attachedFiles.length} attachment${
+            attachedFiles.length === 1
+                ? ""
+                : "s"
+        }`;
+
+    attachmentsEl.appendChild(
+        count
+    );
 
     attachedFiles.forEach(
         (file, index) => {
 
             const item =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
             item.className =
                 "attach-item";
 
-            item.innerHTML = `
-                📎 ${escapeHtml(file.name)}
-            `;
+            const preview =
+                document.createElement(
+                    "div"
+                );
+
+            preview.className =
+                "attach-preview";
+
+            if (
+                isImageFile(file)
+            ) {
+
+                const image =
+                    document.createElement(
+                        "img"
+                    );
+
+                image.alt =
+                    file.name;
+
+                image.loading =
+                    "lazy";
+
+                image.decoding =
+                    "async";
+
+                image.src =
+                    URL.createObjectURL(
+                        file
+                    );
+
+                image.onerror =
+                    () => {
+
+                        image.remove();
+
+                        preview.innerHTML =
+                            '<span class="attach-file-icon">🖼</span>';
+
+                    };
+
+                preview.appendChild(
+                    image
+                );
+
+            } else {
+
+                const icon =
+                    document.createElement(
+                        "span"
+                    );
+
+                icon.className =
+                    "attach-file-icon";
+
+                icon.textContent =
+                    isPdfFile(file)
+                        ? "📄"
+                        : "📎";
+
+                preview.appendChild(
+                    icon
+                );
+
+            }
+
+            const info =
+                document.createElement(
+                    "div"
+                );
+
+            info.className =
+                "attach-info";
+
+            const name =
+                document.createElement(
+                    "div"
+                );
+
+            name.className =
+                "attach-name";
+
+            name.textContent =
+                file.name;
+
+            const type =
+                document.createElement(
+                    "div"
+                );
+
+            type.className =
+                "attach-type";
+
+            type.textContent =
+                getAttachmentLabel(
+                    file
+                );
+
+            info.append(
+                name,
+                type
+            );
 
             const remove =
-                document.createElement("button");
+                document.createElement(
+                    "button"
+                );
 
             remove.className =
                 "attach-remove";
 
-            remove.textContent = "×";
+            remove.textContent =
+                "×";
 
-            remove.onclick = () => {
+            remove.title =
+                "Remove attachment";
 
-                attachedFiles.splice(
-                    index,
-                    1
-                );
+            remove.setAttribute(
+                "aria-label",
+                `Remove ${file.name}`
+            );
 
-                renderAttachments();
-            };
+            remove.onclick =
+                () => {
 
-            item.appendChild(remove);
+                    attachedFiles.splice(
+                        index,
+                        1
+                    );
 
-            attachmentsEl.appendChild(item);
+                    renderAttachments();
+
+                };
+
+            item.append(
+                preview,
+                info,
+                remove
+            );
+
+            attachmentsEl.appendChild(
+                item
+            );
+
         }
     );
 }
 
-async function addFiles(files) {
 
-    for (const file of files) {
+function getAttachmentLabel(
+    file
+) {
+
+    if (
+        isImageFile(file)
+    ) {
+
+        return (
+            "Image · " +
+            formatFileSize(file.size)
+        );
+
+    }
+
+    if (
+        isPdfFile(file)
+    ) {
+
+        return (
+            "PDF · " +
+            formatFileSize(file.size)
+        );
+
+    }
+
+    return (
+        "File · " +
+        formatFileSize(file.size)
+    );
+}
+
+
+function formatFileSize(
+    bytes
+) {
+
+    if (bytes < 1024) {
+        return `${bytes} B`;
+    }
+
+    if (
+        bytes <
+        1024 * 1024
+    ) {
+
+        return (
+            Math.round(
+                bytes / 1024
+            ) +
+            " KB"
+        );
+
+    }
+
+    return (
+        (
+            bytes /
+            (1024 * 1024)
+        ).toFixed(1) +
+        " MB"
+    );
+}
+
+
+/* =========================================================
+   ADD FILES
+========================================================= */
+
+async function addFiles(
+    files
+) {
+
+    const incoming =
+        Array.from(files);
+
+    if (!incoming.length) {
+        return;
+    }
+
+    for (
+        const file of incoming
+    ) {
 
         if (
-            attachedFiles.some(
-                f =>
-                    f.name === file.name &&
-                    f.size === file.size
-            )
+            attachedFiles.length >=
+            MAX_ATTACHMENTS
         ) {
+
+            showToast(
+                `Maximum ${MAX_ATTACHMENTS} attachments allowed.`,
+                "error"
+            );
+
+            break;
+        }
+
+        const validation =
+            validateFile(file);
+
+        if (
+            !validation.valid
+        ) {
+
+            showToast(
+                validation.message,
+                "error"
+            );
+
             continue;
         }
 
-        attachedFiles.push(file);
+        const duplicate =
+            attachedFiles.some(
+                existing =>
+                    existing.name ===
+                        file.name &&
+                    existing.size ===
+                        file.size &&
+                    existing.lastModified ===
+                        file.lastModified
+            );
+
+        if (duplicate) {
+            continue;
+        }
+
+        attachedFiles.push(
+            file
+        );
     }
 
     renderAttachments();
 }
 
+
+/* =========================================================
+   FILE -> DATA URL
+========================================================= */
+
+function fileToDataUrl(
+    file
+) {
+
+    return new Promise(
+        (resolve, reject) => {
+
+            const reader =
+                new FileReader();
+
+            reader.onload =
+                () => resolve(
+                    reader.result
+                );
+
+            reader.onerror =
+                () => reject(
+                    new Error(
+                        `Could not read ${file.name}.`
+                    )
+                );
+
+            reader.readAsDataURL(
+                file
+            );
+
+        }
+    );
+}
+
+
+/* =========================================================
+   PREPARE ATTACHMENTS
+========================================================= */
+
 async function prepareAttachments() {
 
     const result = [];
 
-    for (const file of attachedFiles) {
-
-        /*
-         * TinyLlama is text-only.
-         * Text files are sent to the backend.
-         * Images are displayed as attachments but
-         * are not interpreted by TinyLlama.
-         */
+    for (
+        const file of attachedFiles
+    ) {
 
         if (
-            file.type.startsWith("text/") ||
-            /\.(txt|md|json|csv|js|html|css|py|java|c|cpp|h)$/i
-                .test(file.name)
+            isImageFile(file)
+        ) {
+
+            const dataUrl =
+                await fileToDataUrl(
+                    file
+                );
+
+            result.push({
+
+                name:
+                    file.name,
+
+                type:
+                    file.type,
+
+                dataUrl:
+
+                    dataUrl
+
+            });
+
+            continue;
+        }
+
+        if (
+            isSupportedTextFile(
+                file
+            )
         ) {
 
             try {
@@ -2408,36 +3964,81 @@ async function prepareAttachments() {
 
                 result.push({
 
-                    name: file.name,
+                    name:
+                        file.name,
+
+                    type:
+                        file.type ||
+                        "text/plain",
 
                     content:
-                        content.slice(0, 20000)
+                        content.slice(
+                            0,
+                            MAX_TEXT_LENGTH
+                        )
+
                 });
 
             } catch {
+
                 result.push({
-                    name: file.name,
+
+                    name:
+                        file.name,
+
+                    type:
+                        file.type ||
+                        "text/plain",
+
                     content:
                         "[Could not read this file]"
+
                 });
+
             }
 
-        } else {
+            continue;
+        }
+
+        if (
+            isPdfFile(file)
+        ) {
 
             result.push({
 
-                name: file.name,
+                name:
+                    file.name,
+
+                type:
+                    "application/pdf",
 
                 content:
-                    `[File attached: ${file.name}. ` +
-                    `This file type is not directly readable ` +
-                    `by the current TinyLlama setup.]`
+                    `[PDF attached: ${file.name}]`
+
             });
+
+            continue;
         }
+
+        result.push({
+
+            name:
+                file.name,
+
+            type:
+                file.type ||
+                "application/octet-stream",
+
+            content:
+                `[File attached: ${file.name}]`
+
+        });
+
     }
 
     return result;
 }
+
 
 /* =========================================================
    AUTO RESIZE
@@ -2445,7 +4046,8 @@ async function prepareAttachments() {
 
 function autoResize() {
 
-    messageInput.style.height = "auto";
+    messageInput.style.height =
+        "auto";
 
     messageInput.style.height =
         Math.min(
@@ -2454,22 +4056,27 @@ function autoResize() {
         ) + "px";
 }
 
+
 /* =========================================================
    SCROLL
 ========================================================= */
 
-function scrollToBottom(force = false) {
+function scrollToBottom(
+    force = false
+) {
 
     if (
         userScrolledUp &&
         !force
     ) {
+
         return;
     }
 
     chatScroll.scrollTop =
         chatScroll.scrollHeight;
 }
+
 
 chatScroll.addEventListener(
     "scroll",
@@ -2482,8 +4089,10 @@ chatScroll.addEventListener(
 
         userScrolledUp =
             distance > 120;
+
     }
 );
+
 
 /* =========================================================
    TEXT TO SPEECH
@@ -2491,15 +4100,27 @@ chatScroll.addEventListener(
 
 function speakText(text) {
 
-    if (!("speechSynthesis" in window)) {
-        alert("Text-to-speech is not supported.");
+    if (
+        !(
+            "speechSynthesis"
+            in window
+        )
+    ) {
+
+        showToast(
+            "Text-to-speech is not supported.",
+            "error"
+        );
+
         return;
     }
 
     speechSynthesis.cancel();
 
     const utterance =
-        new SpeechSynthesisUtterance(text);
+        new SpeechSynthesisUtterance(
+            text
+        );
 
     utterance.rate = .95;
 
@@ -2507,6 +4128,7 @@ function speakText(text) {
         utterance
     );
 }
+
 
 /* =========================================================
    EXPORT
@@ -2528,44 +4150,88 @@ function exportChat() {
         message => {
 
             markdown +=
-                message.role === "user"
+                message.role ===
+                    "user"
                     ? "## You\n\n"
                     : "## Nexora AI\n\n";
 
             markdown +=
                 message.content +
                 "\n\n";
+
+            if (
+                message.attachments?.length
+            ) {
+
+                markdown +=
+                    "Attachments:\n";
+
+                message.attachments
+                    .forEach(
+                        file => {
+
+                            markdown +=
+                                `- ${file.name}\n`;
+
+                        }
+                    );
+
+                markdown +=
+                    "\n";
+            }
+
         }
     );
 
     const blob =
         new Blob(
             [markdown],
-            { type: "text/markdown" }
+            {
+                type:
+                    "text/markdown"
+            }
         );
 
     const url =
-        URL.createObjectURL(blob);
+        URL.createObjectURL(
+            blob
+        );
 
     const link =
-        document.createElement("a");
+        document.createElement(
+            "a"
+        );
 
     link.href = url;
 
     link.download =
-        `${safeFilename(chat.title)}.md`;
+        `${safeFilename(
+            chat.title
+        )}.md`;
 
     link.click();
 
-    URL.revokeObjectURL(url);
+    URL.revokeObjectURL(
+        url
+    );
 }
 
-function safeFilename(name) {
+
+function safeFilename(
+    name
+) {
 
     return String(name)
-        .replace(/[<>:"/\\|?*]/g, "_")
-        .slice(0,80);
+        .replace(
+            /[<>:"/\\|?*]/g,
+            "_"
+        )
+        .slice(
+            0,
+            80
+        );
 }
+
 
 /* =========================================================
    THEME
@@ -2574,24 +4240,34 @@ function safeFilename(name) {
 function loadTheme() {
 
     const theme =
-        localStorage.getItem(THEME_KEY);
+        localStorage.getItem(
+            THEME_KEY
+        );
 
-    if (theme === "light") {
-        document.body.classList.add("light");
+    if (
+        theme === "light"
+    ) {
+
+        document.body.classList
+            .add("light");
     }
 }
 
+
 function toggleTheme() {
 
-    document.body.classList.toggle("light");
+    document.body.classList
+        .toggle("light");
 
     localStorage.setItem(
         THEME_KEY,
-        document.body.classList.contains("light")
+        document.body.classList
+            .contains("light")
             ? "light"
             : "dark"
     );
 }
+
 
 /* =========================================================
    COMMAND PALETTE
@@ -2600,13 +4276,18 @@ function toggleTheme() {
 function openCommandPalette() {
 
     document
-        .getElementById("commandModal")
+        .getElementById(
+            "commandModal"
+        )
         .classList.add("show");
 
     document
-        .getElementById("commandInput")
+        .getElementById(
+            "commandInput"
+        )
         .focus();
 }
+
 
 function closeModal(id) {
 
@@ -2614,6 +4295,7 @@ function closeModal(id) {
         .getElementById(id)
         .classList.remove("show");
 }
+
 
 /* =========================================================
    EVENTS
@@ -2625,14 +4307,18 @@ function setupEvents() {
         sendMessage;
 
     document
-        .getElementById("newChatBtn")
-        .onclick = () => {
+        .getElementById(
+            "newChatBtn"
+        )
+        .onclick =
+        () => {
 
             if (generating) {
                 stopGeneration();
             }
 
             createChat();
+
         };
 
     messageInput.addEventListener(
@@ -2645,30 +4331,40 @@ function setupEvents() {
         event => {
 
             if (
-                event.key === "Enter" &&
+                event.key ===
+                    "Enter" &&
                 !event.shiftKey
             ) {
 
                 event.preventDefault();
 
                 sendMessage();
+
             }
+
         }
     );
 
-    attachBtn.onclick = () => {
-        fileInput.click();
-    };
+    attachBtn.onclick =
+        () => {
+
+            fileInput.click();
+
+        };
 
     fileInput.addEventListener(
         "change",
         () => {
 
             addFiles(
-                Array.from(fileInput.files)
+                Array.from(
+                    fileInput.files
+                )
             );
 
-            fileInput.value = "";
+            fileInput.value =
+                "";
+
         }
     );
 
@@ -2678,60 +4374,99 @@ function setupEvents() {
     );
 
     document
-        .getElementById("themeBtn")
-        .onclick = toggleTheme;
+        .getElementById(
+            "themeBtn"
+        )
+        .onclick =
+        toggleTheme;
 
     document
-        .getElementById("exportBtn")
-        .onclick = exportChat;
+        .getElementById(
+            "exportBtn"
+        )
+        .onclick =
+        exportChat;
 
     document
-        .getElementById("aboutBtn")
-        .onclick = () => {
+        .getElementById(
+            "aboutBtn"
+        )
+        .onclick =
+        () => {
 
             document
-                .getElementById("aboutModal")
-                .classList.add("show");
+                .getElementById(
+                    "aboutModal"
+                )
+                .classList.add(
+                    "show"
+                );
+
         };
 
     document
-        .getElementById("commandBtn")
+        .getElementById(
+            "commandBtn"
+        )
         .onclick =
         openCommandPalette;
 
     document
-        .getElementById("mobileMenuBtn")
-        .onclick = () => {
+        .getElementById(
+            "mobileMenuBtn"
+        )
+        .onclick =
+        () => {
 
-            sidebar.classList.toggle("open");
+            sidebar.classList
+                .toggle("open");
+
         };
 
     document
-        .querySelectorAll("[data-close]")
-        .forEach(button => {
+        .querySelectorAll(
+            "[data-close]"
+        )
+        .forEach(
+            button => {
 
-            button.onclick = () => {
+                button.onclick =
+                    () => {
 
-                closeModal(
-                    button.dataset.close
-                );
-            };
-        });
+                        closeModal(
+                            button.dataset
+                                .close
+                        );
 
-    document
-        .querySelectorAll(".palette-item")
-        .forEach(item => {
+                    };
 
-            item.onclick = () => {
-
-                executeCommand(
-                    item.dataset.command
-                );
-            };
-        });
+            }
+        );
 
     document
-        .getElementById("commandInput")
+        .querySelectorAll(
+            ".palette-item"
+        )
+        .forEach(
+            item => {
+
+                item.onclick =
+                    () => {
+
+                        executeCommand(
+                            item.dataset
+                                .command
+                        );
+
+                    };
+
+            }
+        );
+
+    document
+        .getElementById(
+            "commandInput"
+        )
         .addEventListener(
             "input",
             filterCommands
@@ -2742,31 +4477,49 @@ function setupEvents() {
         event => {
 
             if (
-                (event.ctrlKey || event.metaKey) &&
-                event.key.toLowerCase() === "k"
+                (
+                    event.ctrlKey ||
+                    event.metaKey
+                ) &&
+                event.key.toLowerCase() ===
+                    "k"
             ) {
 
                 event.preventDefault();
 
                 openCommandPalette();
+
             }
 
             if (
-                event.key === "Escape"
+                event.key ===
+                "Escape"
             ) {
 
                 document
                     .querySelectorAll(
                         ".modal-backdrop.show"
                     )
-                    .forEach(modal => {
-                        modal.classList.remove("show");
-                    });
+                    .forEach(
+                        modal => {
+
+                            modal.classList
+                                .remove(
+                                    "show"
+                                );
+
+                        }
+                    );
+
             }
+
         }
     );
 
-    /* Drag and drop */
+
+    /* =====================================================
+       DRAG AND DROP
+    ===================================================== */
 
     document.addEventListener(
         "dragover",
@@ -2774,7 +4527,17 @@ function setupEvents() {
 
             event.preventDefault();
 
-            dropZone.classList.add("show");
+            if (
+                event.dataTransfer &&
+                event.dataTransfer.types
+                    .includes("Files")
+            ) {
+
+                dropZone.classList
+                    .add("show");
+
+            }
+
         }
     );
 
@@ -2785,12 +4548,17 @@ function setupEvents() {
             if (
                 event.clientX <= 0 ||
                 event.clientY <= 0 ||
-                event.clientX >= window.innerWidth ||
-                event.clientY >= window.innerHeight
+                event.clientX >=
+                    window.innerWidth ||
+                event.clientY >=
+                    window.innerHeight
             ) {
 
-                dropZone.classList.remove("show");
+                dropZone.classList
+                    .remove("show");
+
             }
+
         }
     );
 
@@ -2800,78 +4568,124 @@ function setupEvents() {
 
             event.preventDefault();
 
-            dropZone.classList.remove("show");
+            dropZone.classList
+                .remove("show");
 
-            if (event.dataTransfer.files.length) {
+            if (
+                event.dataTransfer &&
+                event.dataTransfer.files.length
+            ) {
 
                 addFiles(
                     Array.from(
                         event.dataTransfer.files
                     )
                 );
+
             }
+
         }
     );
+
 }
+
 
 /* =========================================================
    COMMANDS
 ========================================================= */
 
-function executeCommand(command) {
+function executeCommand(
+    command
+) {
 
-    closeModal("commandModal");
+    closeModal(
+        "commandModal"
+    );
 
-    if (command === "new") {
+    if (
+        command === "new"
+    ) {
+
         createChat();
+
     }
 
-    if (command === "theme") {
+    if (
+        command === "theme"
+    ) {
+
         toggleTheme();
+
     }
 
-    if (command === "export") {
+    if (
+        command === "export"
+    ) {
+
         exportChat();
+
     }
 
-    if (command === "about") {
+    if (
+        command === "about"
+    ) {
 
         document
-            .getElementById("aboutModal")
-            .classList.add("show");
+            .getElementById(
+                "aboutModal"
+            )
+            .classList.add(
+                "show"
+            );
+
     }
 }
+
 
 function filterCommands() {
 
     const query =
         document
-            .getElementById("commandInput")
+            .getElementById(
+                "commandInput"
+            )
             .value
             .toLowerCase();
 
     document
-        .querySelectorAll(".palette-item")
-        .forEach(item => {
+        .querySelectorAll(
+            ".palette-item"
+        )
+        .forEach(
+            item => {
 
-            item.style.display =
-                item.textContent
-                    .toLowerCase()
-                    .includes(query)
-                    ? ""
-                    : "none";
-        });
+                item.style.display =
+                    item.textContent
+                        .toLowerCase()
+                        .includes(query)
+                        ? ""
+                        : "none";
+
+            }
+        );
 }
+
 
 /* =========================================================
    HELPERS
 ========================================================= */
 
-function escapeMarkdownForDisplay(text) {
+function escapeMarkdownForDisplay(
+    text
+) {
 
     return String(text)
-        .replace(/[`*_]/g, "\\$&");
+        .replace(
+            /[`*_]/g,
+            "\\$&"
+        );
 }
+
 
 /* =========================================================
    GLOBAL ERROR HANDLER
@@ -2883,10 +4697,13 @@ window.addEventListener(
 
         console.error(
             "Frontend error:",
-            event.error || event.message
+            event.error ||
+            event.message
         );
+
     }
 );
+
 
 window.addEventListener(
     "unhandledrejection",
@@ -2896,10 +4713,10 @@ window.addEventListener(
             "Unhandled promise rejection:",
             event.reason
         );
+
     }
 );
 </script>
 
 </body>
 </html>
-

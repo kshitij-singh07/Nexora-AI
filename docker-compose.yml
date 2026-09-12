@@ -27,8 +27,8 @@ services:
     ports:
       - "5000:5000"        # Exposed for direct testing
     environment:
-      - OLLAMA_URL=http://ollama:11434   # Container name as hostname
-      - MODEL_NAME=tinyllama
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - GROQ_API_KEY=${GROQ_API_KEY}
     depends_on:
       - ollama             # Ollama must start first
     networks:

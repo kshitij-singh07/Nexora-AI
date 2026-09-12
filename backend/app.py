@@ -7,8 +7,8 @@ from flask_cors import CORS
 from dotenv import load_dotenv
 from werkzeug.utils import secure_filename
 
-from .ai_provider import AIProvider
-from .pdf_service import extract_pdf, retrieve_relevant_pages
+from ai_provider import AIProvider
+from pdf_service import extract_pdf, retrieve_relevant_pages
 
 
 # Load environment variables

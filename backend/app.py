@@ -1,27 +1,29 @@
 from flask import Flask, request, jsonify, Response, stream_with_context
 from flask_cors import CORS
-import requests
+from dotenv import load_dotenv
+from .ai_provider import AIProvider
 import os
 import json
+
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
 
-OLLAMA_URL = os.getenv("OLLAMA_URL", "http://ollama:11434")
-MODEL_NAME = os.getenv("MODEL_NAME", "tinyllama")
-
-MAX_ATTACHMENT_CHARS = 20000
+ai = AIProvider()
 
 
 def system_prompt():
     return {
         "role": "system",
         "content": (
-            "You are Qualibytes GPT, a helpful and friendly AI assistant. "
-            "Give clear, useful and concise answers. "
+            "You are Nexora AI, a helpful and intelligent AI assistant. "
+            "Give accurate, clear and useful answers. "
+            "Think carefully before answering. "
             "Use Markdown when appropriate. "
             "For programming questions, provide clean and understandable code. "
-            "Do not claim to browse the internet or use tools unless tools are actually provided."
+            "Never pretend to browse the web, read a file, or use a tool "
+            "unless that capability has actually been provided."
         )
     }
 
@@ -55,29 +57,8 @@ def prepare_messages(data):
             "content": content
         })
 
-    attachments = data.get("attachments", [])
-
-    if isinstance(attachments, list) and attachments:
-        attachment_text = []
-
-        for attachment in attachments:
-            if not isinstance(attachment, dict):
-                continue
-
-            name = attachment.get("name", "attachment")
-            content = attachment.get("content", "")
-
-            if content:
-                content = str(content)[:MAX_ATTACHMENT_CHARS]
-
-                attachment_text.append(
-                    f"\n\n[Attached file: {name}]\n"
-                    f"{content}\n"
-                    f"[End attached file]"
-                )
-
-        if attachment_text and clean_messages:
-            clean_messages[-1]["content"] += "".join(attachment_text)
+    if not clean_messages:
+        raise ValueError("No valid messages provided")
 
     return [system_prompt()] + clean_messages
 
@@ -86,53 +67,32 @@ def prepare_messages(data):
 def health():
     return jsonify({
         "status": "OK",
-        "app": "Qualibytes GPT Backend",
-        "model": MODEL_NAME
+        "app": "Nexora AI Backend",
+        "primary_provider": "Gemini",
+        "fallback_provider": "Groq"
     })
 
 
 @app.route("/api/chat", methods=["POST"])
 def chat():
+
     try:
         data = request.get_json()
-        full_messages = prepare_messages(data)
+        messages = prepare_messages(data)
 
-        response = requests.post(
-            f"{OLLAMA_URL}/api/chat",
-            json={
-                "model": MODEL_NAME,
-                "messages": full_messages,
-                "stream": False,
-                "options": {
-                    "temperature": 0.7,
-                    "num_predict": 500
-                }
-            },
-            timeout=120
-        )
+        result = ai.generate(messages)
 
-        response.raise_for_status()
-
-        result = response.json()
-        reply = result["message"]["content"].strip()
-
-        return jsonify({"reply": reply})
+        return jsonify(result)
 
     except ValueError as e:
-        return jsonify({"error": str(e)}), 400
-
-    except requests.exceptions.ConnectionError:
         return jsonify({
-            "error": "Ollama service is not reachable."
-        }), 503
-
-    except requests.exceptions.Timeout:
-        return jsonify({
-            "error": "Ollama timed out. The model may still be loading."
-        }), 504
+            "error": str(e)
+        }), 400
 
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({
+            "error": str(e)
+        }), 500
 
 
 @app.route("/api/chat/stream", methods=["POST"])
@@ -140,88 +100,61 @@ def chat_stream():
 
     try:
         data = request.get_json()
-        full_messages = prepare_messages(data)
+        messages = prepare_messages(data)
 
     except ValueError as e:
-        return jsonify({"error": str(e)}), 400
+        return jsonify({
+            "error": str(e)
+        }), 400
 
     except Exception as e:
-        return jsonify({"error": str(e)}), 400
+        return jsonify({
+            "error": str(e)
+        }), 400
 
     def generate():
+
         try:
-            response = requests.post(
-                f"{OLLAMA_URL}/api/chat",
-                json={
-                    "model": MODEL_NAME,
-                    "messages": full_messages,
-                    "stream": True,
-                    "options": {
-                        "temperature": 0.7,
-                        "num_predict": 500
-                    }
-                },
-                stream=True,
-                timeout=(10, 3600)
-            )
 
-            response.raise_for_status()
+            provider_sent = False
 
-            for line in response.iter_lines(decode_unicode=True):
+            for item in ai.stream(messages):
 
-                if not line:
-                    continue
+                if item["type"] == "token":
 
-                try:
-                    chunk = json.loads(line)
+                    if not provider_sent:
 
-                    if "message" in chunk:
-                        token = chunk["message"].get("content", "")
-
-                        if token:
-                            yield (
-                                "data: "
-                                + json.dumps({
-                                    "type": "token",
-                                    "token": token
-                                })
-                                + "\n\n"
-                            )
-
-                    if chunk.get("done"):
                         yield (
                             "data: "
                             + json.dumps({
-                                "type": "done"
+                                "type": "provider",
+                                "provider": item["provider"],
+                                "model": item["model"]
                             })
                             + "\n\n"
                         )
-                        break
 
-                except json.JSONDecodeError:
-                    continue
+                        provider_sent = True
 
-        except requests.exceptions.ConnectionError:
+                    yield (
+                        "data: "
+                        + json.dumps({
+                            "type": "token",
+                            "token": item["token"]
+                        })
+                        + "\n\n"
+                    )
+
             yield (
                 "data: "
                 + json.dumps({
-                    "type": "error",
-                    "error": "Ollama service is not reachable."
+                    "type": "done"
                 })
                 + "\n\n"
             )
 
-        except requests.exceptions.Timeout:
-            yield (
-                "data: "
-                + json.dumps({
-                    "type": "error",
-                    "error": "Ollama timed out."
-                })
-                + "\n\n"
-            )
+        except Exception as e:
 
-        except requests.exceptions.RequestException as e:
             yield (
                 "data: "
                 + json.dumps({
@@ -230,11 +163,26 @@ def chat_stream():
                 })
                 + "\n\n"
             )
+            yield (
+                "data: "
+                + json.dumps({
+                    "type": "provider",
+                    "provider": result["provider"],
+                    "model": result["model"]
+                })
+                + "\n\n"
+            )
 
-        except GeneratorExit:
-            return
+            yield (
+                "data: "
+                + json.dumps({
+                    "type": "done"
+                })
+                + "\n\n"
+            )
 
         except Exception as e:
+
             yield (
                 "data: "
                 + json.dumps({

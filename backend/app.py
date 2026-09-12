@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 from werkzeug.utils import secure_filename
 
 from .ai_provider import AIProvider
-from .pdf_service import extract_pdf
+from .pdf_service import extract_pdf, retrieve_relevant_pages
 
 
 # Load environment variables
@@ -42,9 +42,6 @@ unless that capability has actually been provided.
 
 
 def prepare_messages(messages):
-    """
-    Validate and prepare chat messages for the AI provider.
-    """
 
     if not isinstance(messages, list):
         raise ValueError("messages must be a list.")
@@ -156,7 +153,6 @@ def chat_stream():
 
             for item in ai.stream(messages):
 
-                # Send provider information once
                 if not provider_sent:
 
                     yield (
@@ -171,7 +167,6 @@ def chat_stream():
 
                     provider_sent = True
 
-                # Send streamed token
                 if item.get("type") == "token":
 
                     yield (
@@ -183,7 +178,6 @@ def chat_stream():
                         + "\n\n"
                     )
 
-            # Tell frontend streaming is finished
             yield (
                 "data: "
                 + json.dumps({
@@ -221,7 +215,6 @@ def chat_stream():
 @app.route("/api/pdf/extract", methods=["POST"])
 def extract_pdf_endpoint():
 
-    # Check whether a file was uploaded
     if "file" not in request.files:
 
         return jsonify({
@@ -230,14 +223,12 @@ def extract_pdf_endpoint():
 
     file = request.files["file"]
 
-    # Check filename
     if not file.filename:
 
         return jsonify({
             "error": "No file selected."
         }), 400
 
-    # Only allow PDF files
     if not file.filename.lower().endswith(".pdf"):
 
         return jsonify({
@@ -250,7 +241,6 @@ def extract_pdf_endpoint():
 
     try:
 
-        # Create temporary PDF file
         with tempfile.NamedTemporaryFile(
             delete=False,
             suffix=".pdf"
@@ -260,7 +250,6 @@ def extract_pdf_endpoint():
 
             temp_path = temp_file.name
 
-        # Extract PDF text
         result = extract_pdf(temp_path)
 
         return jsonify({
@@ -278,7 +267,173 @@ def extract_pdf_endpoint():
 
     finally:
 
-        # Delete temporary PDF
+        if temp_path and os.path.exists(temp_path):
+
+            os.remove(temp_path)
+
+
+# ============================================================
+# PDF QUESTION & ANSWER
+# ============================================================
+
+@app.route("/api/pdf/ask", methods=["POST"])
+def ask_pdf():
+
+    if "file" not in request.files:
+
+        return jsonify({
+            "error": "No PDF file provided."
+        }), 400
+
+    file = request.files["file"]
+
+    if not file.filename:
+
+        return jsonify({
+            "error": "No file selected."
+        }), 400
+
+    if not file.filename.lower().endswith(".pdf"):
+
+        return jsonify({
+            "error": "Only PDF files are supported."
+        }), 400
+
+    question = request.form.get("question", "").strip()
+
+    if not question:
+
+        return jsonify({
+            "error": "No question provided."
+        }), 400
+
+    filename = secure_filename(file.filename)
+
+    temp_path = None
+
+    try:
+
+        # ----------------------------------------------------
+        # Save uploaded PDF temporarily
+        # ----------------------------------------------------
+
+        with tempfile.NamedTemporaryFile(
+            delete=False,
+            suffix=".pdf"
+        ) as temp_file:
+
+            file.save(temp_file.name)
+
+            temp_path = temp_file.name
+
+        # ----------------------------------------------------
+        # Extract PDF
+        # ----------------------------------------------------
+
+        pdf_result = extract_pdf(temp_path)
+
+        # ----------------------------------------------------
+        # Retrieve relevant pages
+        # ----------------------------------------------------
+
+        relevant_pages = retrieve_relevant_pages(
+            pdf_result["pages"],
+            question,
+            top_k=5
+        )
+
+        if not relevant_pages:
+
+            return jsonify({
+                "error": "No readable text was found in this PDF."
+            }), 400
+
+        # ----------------------------------------------------
+        # Build context for Gemini/Groq
+        # ----------------------------------------------------
+
+        context_parts = []
+
+        source_pages = []
+
+        for page in relevant_pages:
+
+            page_number = page["page"]
+            page_text = page["text"]
+
+            source_pages.append(page_number)
+
+            context_parts.append(
+                f"--- PAGE {page_number} ---\n"
+                f"{page_text}"
+            )
+
+        context = "\n\n".join(context_parts)
+
+        # ----------------------------------------------------
+        # Ask AI using retrieved PDF context
+        # ----------------------------------------------------
+
+        pdf_system_prompt = """
+You are Nexora AI's PDF analysis assistant.
+
+Answer the user's question using the provided PDF context.
+
+IMPORTANT RULES:
+
+1. Use only the information contained in the provided PDF context.
+2. Do not invent information that is not present.
+3. If the answer cannot be found in the provided context, clearly say that
+   the information could not be found in the relevant PDF content.
+4. When possible, mention the PDF page number where the information was found.
+5. Give a clear and concise answer.
+6. Use Markdown when useful.
+"""
+
+        user_prompt = f"""
+PDF FILE:
+{filename}
+
+USER QUESTION:
+{question}
+
+RELEVANT PDF CONTENT:
+
+{context}
+
+Answer the user's question based only on the relevant PDF content.
+"""
+
+        messages = [
+            {
+                "role": "system",
+                "content": pdf_system_prompt
+            },
+            {
+                "role": "user",
+                "content": user_prompt
+            }
+        ]
+
+        result = ai.generate(messages)
+
+        return jsonify({
+            "filename": filename,
+            "question": question,
+            "answer": result["reply"],
+            "provider": result.get("provider"),
+            "model": result.get("model"),
+            "source_pages": source_pages
+        })
+
+    except Exception as e:
+
+        return jsonify({
+            "error": f"PDF question answering failed: {str(e)}"
+        }), 500
+
+    finally:
+
         if temp_path and os.path.exists(temp_path):
 
             os.remove(temp_path)

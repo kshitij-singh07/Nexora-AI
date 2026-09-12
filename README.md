@@ -1,451 +1,134 @@
-# 🤖 AI Chatbot
+# 🤖 Nexora AI
 
 > A self-hosted AI chatbot built with Flask, JavaScript, Docker, Ollama, and TinyLlama.
 
-**Author:** Kshitij Singh  
-**GitHub:** https://github.com/kshitij-singh07  
-**Location:** Varanasi, Uttar Pradesh, India
+## 📌 About
 
----
+Nexora AI is a locally hosted AI chatbot that allows users to interact with an AI language model through a simple and responsive web interface.
 
-## 📌 About the Project
+The project uses a Flask backend, JavaScript-based frontend, Docker for containerization, and Ollama to run the AI model locally.
 
-This project is a locally hosted AI chatbot that allows users to interact with an AI language model through a simple web interface.
+## ✨ Features
 
-The application uses **TinyLlama** through **Ollama** for generating responses. The frontend communicates with a **Flask backend**, while Docker Compose manages the complete application environment.
-
-The project was built to understand practical concepts such as:
-
-- AI model integration
-- REST API communication
-- Frontend-backend communication
-- Docker containerization
-- Ollama model deployment
-- Multi-container application architecture
-
----
+* 🤖 AI-powered chat interface
+* 🖥️ Simple and responsive web interface
+* 🐳 Docker-based setup
+* 🧠 Local AI model support through Ollama
+* ⚡ Flask backend
+* 🌐 JavaScript frontend
+* 🔒 Local/self-hosted AI environment
+* 📱 Responsive interface for different screen sizes
 
 ## 🛠️ Technologies Used
 
-| Technology | Purpose |
-|---|---|
-| HTML | Frontend structure |
-| CSS | User interface styling |
-| JavaScript | Chat functionality and API communication |
-| Python | Backend development |
-| Flask | REST API |
-| Ollama | AI model runtime |
-| TinyLlama | Language model |
-| Docker | Containerization |
-| Docker Compose | Multi-container management |
-| Nginx | Frontend web server and API proxy |
+### Frontend
 
----
+* HTML
+* CSS
+* JavaScript
 
-## 🏗️ Architecture
+### Backend
 
-```text
-                 ┌─────────────────────┐
-                 │      User / Browser │
-                 └──────────┬──────────┘
-                            │
-                            ▼
-                 ┌─────────────────────┐
-                 │  Frontend - Nginx  │
-                 │     HTML / CSS / JS │
-                 │       Port 80       │
-                 └──────────┬──────────┘
-                            │
-                         /api/chat
-                            │
-                            ▼
-                 ┌─────────────────────┐
-                 │   Backend - Flask  │
-                 │      Python API     │
-                 │      Port 5000      │
-                 └──────────┬──────────┘
-                            │
-                            ▼
-                 ┌─────────────────────┐
-                 │       Ollama        │
-                 │     TinyLlama       │
-                 │     Port 11434      │
-                 └─────────────────────┘
-```
+* Python
+* Flask
 
-### Request Flow
+### AI
 
-1. The user enters a message in the web interface.
-2. JavaScript sends the message to the Flask backend.
-3. Flask forwards the request to Ollama.
-4. Ollama processes the request using TinyLlama.
-5. The generated response is returned to Flask.
-6. Flask sends the response back to the frontend.
-7. The response is displayed to the user.
+* Ollama
+* TinyLlama
 
----
+### Deployment
+
+* Docker
+* Nginx
 
 ## 📂 Project Structure
 
 ```text
-AI-GPT/
+Nexora AI/
 │
 ├── backend/
-│   ├── Dockerfile
-│   ├── app.py
-│   └── requirements.txt
+│   └── app.py
 │
 ├── frontend/
-│   ├── Dockerfile
-│   ├── nginx.conf
-│   └── index.html
+│   ├── index.html
+│   └── nginx.conf
 │
+├── Dockerfile
 ├── docker-compose.yml
-├── setup.sh
-├── Jenkinsfile
-├── .gitlab-ci.yml
-├── .gitignore
+├── requirements.txt
 └── README.md
 ```
 
----
+## 🚀 Getting Started
 
-## ⚙️ Prerequisites
+### Prerequisites
 
-Before running the project, make sure you have:
+Make sure you have the following installed:
 
-- Git
-- Docker Desktop
-- Docker Compose
+* Docker Desktop
+* Ollama
+* Git
 
-For Windows, Docker Desktop with the **WSL 2 based engine** is recommended.
+### 1. Clone the Repository
 
-Check Docker installation:
-
-```powershell
-docker --version
-docker compose version
+```bash
+git clone https://github.com/kshitij-singh07/Nexora-AI.git
+cd Nexora-AI
 ```
 
----
+### 2. Install the AI Model
 
-## 🚀 Run the Project Locally
+Make sure Ollama is installed and running, then pull the required model:
 
-### 1. Clone the repository
-
-```powershell
-git clone https://github.com/kshitij-singh07/ai-chatbot-project.git
+```bash
+ollama pull tinyllama
 ```
 
-Move into the project directory:
+### 3. Build and Run with Docker
 
-```powershell
-cd ai-chatbot-project
-```
-
-### 2. Build and start the application
-
-```powershell
+```bash
 docker compose up --build
 ```
 
-The first setup may take some time because the Ollama Docker image is large.
+Once the containers are running, open the application in your browser using the port configured in `docker-compose.yml`.
 
-### 3. Download TinyLlama
+## 🔧 Configuration
 
-After the containers are running, pull the model:
+The application can be configured through the project configuration files and Docker Compose setup.
 
-```powershell
-docker exec -it qualibytes-ollama ollama pull tinyllama
-```
+Make sure Ollama is running and that the configured model name matches the model available in Ollama.
 
-A successful installation will end with:
+## 🐳 Docker
 
-```text
-success
-```
+Docker is used to simplify the setup and run the different components of Nexora AI in a consistent environment.
 
-### 4. Open the chatbot
+To stop the application:
 
-Open your browser and visit:
-
-```text
-http://localhost
-```
-
-You can now enter messages and communicate with TinyLlama through the web interface.
-
----
-
-## 🔍 Verify the Containers
-
-Run:
-
-```powershell
-docker compose ps
-```
-
-You should see these services:
-
-```text
-qualibytes-frontend
-qualibytes-backend
-qualibytes-ollama
-```
-
-All three should be running.
-
----
-
-## 🧪 Test Ollama
-
-To directly test the AI model:
-
-```powershell
-docker exec -it qualibytes-ollama ollama run tinyllama
-```
-
-You can then enter a question and check whether TinyLlama generates a response.
-
----
-
-## 💬 Example Questions
-
-The chatbot works well for general and beginner-level questions such as:
-
-```text
-What is artificial intelligence?
-
-Explain HTML in simple words.
-
-What is the difference between SQL and NoSQL?
-
-Explain what an API is.
-
-Write a simple Python program to check whether a number is prime.
-
-What is Docker?
-
-Explain object-oriented programming.
-```
-
-Because the project uses a relatively small local language model, responses may not always be accurate for complex reasoning, advanced programming, or current information.
-
----
-
-## 🐳 Docker Services
-
-The application consists of three Docker services.
-
-### Frontend
-
-- Technology: Nginx + HTML/CSS/JavaScript
-- Port: `80`
-- Provides the chatbot user interface
-- Proxies API requests to the backend
-
-### Backend
-
-- Technology: Python + Flask
-- Port: `5000`
-- Handles chatbot API requests
-- Communicates with Ollama
-
-### Ollama
-
-- Technology: Ollama
-- Port: `11434`
-- Runs the TinyLlama model
-- Stores the downloaded model using a Docker volume
-
----
-
-## 🔧 Useful Commands
-
-### Start the application
-
-```powershell
-docker compose up
-```
-
-### Build and start
-
-```powershell
-docker compose up --build
-```
-
-### Run in background
-
-```powershell
-docker compose up -d
-```
-
-### Check running containers
-
-```powershell
-docker compose ps
-```
-
-### View all logs
-
-```powershell
-docker compose logs
-```
-
-### View backend logs
-
-```powershell
-docker compose logs backend
-```
-
-### View Ollama logs
-
-```powershell
-docker compose logs ollama
-```
-
-### Restart the backend
-
-```powershell
-docker compose restart backend
-```
-
-### Stop the application
-
-```powershell
+```bash
 docker compose down
 ```
 
-### Check installed models
+To rebuild the application after making changes:
 
-```powershell
-docker exec qualibytes-ollama ollama list
+```bash
+docker compose up --build
 ```
 
-### Remove containers and volumes
+## 📸 Project
 
-```powershell
-docker compose down -v
-```
-
-> **Warning:** Removing the volume deletes the downloaded Ollama model. You will need to pull TinyLlama again.
-
----
-
-## 🛠️ Troubleshooting
-
-### TinyLlama not found
-
-Run:
-
-```powershell
-docker exec -it qualibytes-ollama ollama pull tinyllama
-```
-
-Then verify:
-
-```powershell
-docker exec qualibytes-ollama ollama list
-```
-
----
-
-### Ollama API returns 404
-
-Make sure TinyLlama has been downloaded:
-
-```powershell
-docker exec -it qualibytes-ollama ollama pull tinyllama
-```
-
-Then restart the backend:
-
-```powershell
-docker compose restart backend
-```
-
----
-
-### Docker engine is not running
-
-Make sure Docker Desktop is running and the Docker engine has started.
-
-Then verify:
-
-```powershell
-docker info
-```
-
----
-
-### Frontend does not open
-
-Check the containers:
-
-```powershell
-docker compose ps
-```
-
-Then check frontend logs:
-
-```powershell
-docker compose logs frontend
-```
-
----
-
-### Backend errors
-
-Check:
-
-```powershell
-docker compose logs backend
-```
-
----
-
-## 📈 Future Improvements
-
-Planned improvements for the project include:
-
-- Improved ChatGPT-style interface
-- Conversation history
-- New Chat functionality
-- Copy response button
-- Typing/loading animation
-- Markdown and code formatting
-- Better error handling
-- Mobile-responsive interface
-- Public deployment
-- Additional AI model options
-
----
-
-## 🎯 Project Goal
-
-The main goal of this project is to gain practical experience in building and deploying an AI-powered application using modern development and containerization technologies.
-
-It demonstrates the integration of:
-
-**Frontend → REST API → Flask Backend → Ollama → TinyLlama**
-
----
+Nexora AI is designed as a simple local AI assistant project and can be extended with additional AI and web application features in the future.
 
 ## 👨‍💻 Author
 
-### Kshitij Singh
+**Kshitij Singh**
 
-B.Tech – Computer Science & Engineering  
-Kashi Institute of Technology, Varanasi, Uttar Pradesh, India
+B.Tech – Computer Science & Engineering
+Kashi Institute of Technology, Varanasi
 
-**GitHub:**  
-https://github.com/kshitij-singh07
-
-**LinkedIn:**  
-https://www.linkedin.com/in/kshitij-singh-57a248337
-
----
+GitHub: https://github.com/kshitij-singh07
+LinkedIn: https://www.linkedin.com/in/kshitij-singh-57a248337
 
 ## 📄 License
 
-This project is intended for educational and personal development purposes.
+This project is intended for educational and development purposes.
